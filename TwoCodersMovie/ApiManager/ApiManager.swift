@@ -22,7 +22,7 @@ class ApiManager {
         if method == .get && !params.isEmpty {
             url = buildURL(pathCompoment: name.description, params: params)
         }else {
-            var urlString = String(format: "%@/", apiUrl,name.description)
+            let urlString = String(format: "%@/", apiUrl,name.description)
             url = URL(string: urlString)
         }
         

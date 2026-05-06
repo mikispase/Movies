@@ -12,17 +12,23 @@ struct MovieCard:View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            PosterImage(url:movie.posterImage)
+            
+            
+            PosterImage(url:movie.posterImage, addBlur: true)
                 .frame(width: 175, height:160)
-                
+                .overlay(content: {
+                    PosterImage(url:movie.posterImage, fit: true)
+                        .frame(width: 175, height:160)
+                })
+            
             VStack(alignment: .leading, spacing: 0) {
                 Text(movie.title ?? "")
-                    .foregroundStyle(.black)
+                    .foregroundStyle(.custom)
                     .multilineTextAlignment(.leading)
                     .font(.system(size: 14, weight: .semibold))
 
                 Text(movie.overview?.truncated(toLength: 100) ?? "")
-                    .foregroundStyle(.black)
+                    .foregroundStyle(.custom)
                     .multilineTextAlignment(.leading)
                     .font(.system(size: 12))
                 

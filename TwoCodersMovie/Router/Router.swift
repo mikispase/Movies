@@ -24,6 +24,8 @@ class Router: ObservableObject {
         self.currentView = currentView
         self.current.append(currentView)
         lastPathCount = path.count
+        self.path.append(value)
+
     }
     
     func detectAndProcessBack() {
@@ -59,5 +61,23 @@ class Router: ObservableObject {
         self.current = []
         self.currentView = ""
         lastPathCount = path.count
+    }
+}
+
+public struct NavigationModifier: ViewModifier {
+    public func body(content: Content) -> some View {
+        content
+            .navigationDestination(for: MovieDetailsViewModel.self, destination: { viewModel in
+                MovieDetailsView(viewModel: viewModel)
+            })
+            .navigationDestination(for: Web.self, destination: { web in
+                // Beter way is present build in SafariController
+                // This is example with UIViewRepresentable
+               // WebView(url: web.url)
+                SafariView(url: web.url)
+                    .navigationBarBackButtonHidden()
+                    .navigationBarTitleDisplayMode(.inline)
+                    .ignoresSafeArea()
+            })
     }
 }

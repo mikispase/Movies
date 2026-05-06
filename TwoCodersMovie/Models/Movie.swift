@@ -111,6 +111,6 @@ class Movie: NSObject, Codable, Identifiable {
     }
     
     var posterImage:URL? {
-        return URL(string: "https://image.tmdb.org/t/p/w780\(posterPath ?? "")")
+        return URL(string: "https://image.tmdb.org/t/p/w200/\(posterPath ?? "")")
     }
 }

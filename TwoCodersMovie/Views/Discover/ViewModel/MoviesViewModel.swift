@@ -9,8 +9,7 @@ import SwiftUI
 import Combine
 import SwiftyJSON
 
-class MoviesViewModel : ObservableObject {
-    let api = ApiManager.shared
+class MoviesViewModel : MainViewModel {
     var page = 1
     
     @Published var movies:[Movie] = []
@@ -18,6 +17,8 @@ class MoviesViewModel : ObservableObject {
     @Published var shoudLoadMore:Bool = true
 
     init() {
+        super.init(ObjectIdentifier(Self.Type.self))
+
         Task {
            await getMoviews(page: page)
         }
@@ -45,6 +46,8 @@ class MoviesViewModel : ObservableObject {
             }
             self.movies.append(contentsOf: moviesList)
             
+            SDImagePreloader.shared.preload(urls: moviesList.compactMap({ $0.posterImage }))
+            
             if initialLoad {
                 initialLoad = false
             }
@@ -61,7 +64,7 @@ class MoviesViewModel : ObservableObject {
     func loadMore() {
         page+=1
 
-        Task {
+        Task { @MainActor in
           await getMoviews(page: page)
         }
     }
