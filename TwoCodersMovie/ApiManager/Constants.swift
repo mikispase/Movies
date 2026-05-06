@@ -6,8 +6,3 @@
 //
 
 
-let apiUrl = "https://api.themoviedb.org/3"
-
-// Api key must be in .env
-// now for test
-let apiKey = ""

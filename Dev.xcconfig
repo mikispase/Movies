@@ -1,0 +1,15 @@
+//
+//  Dev.xcconfig
+//  TwoCodersMovie
+//
+//  Created by Dimitar Spasovski on 07/05/2026.
+//
+
+
+//############################################################################
+// "I am temporarily committing the API key to the repository so that the project can be reviewed and tested properly. I’m aware that keeping keys in version control is not best practice, and I will remove it once the review is complete."
+SLASH = /
+API_BASE_URL = https:${SLASH}${SLASH}api.themoviedb.org/3
+API_KEY =  eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyNmYyMDliOWExOTM0MGU2YWY4MDFlNDU3OWNiZGZjMCIsIm5iZiI6MTc3ODA2OTA5OS4zMDksInN1YiI6IjY5ZmIyZTZiYWM2NDlmZWI2YWNkMGYyMiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.zczHEPr2K17edOpKbxnNs1arkNAUpdqkYaX1IbxkvE8
+APP_ENV = dev
+//#############################################################################

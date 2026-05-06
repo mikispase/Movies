@@ -10,12 +10,17 @@ import SwiftyJSON
 class ApiManager {
     static let shared = ApiManager()
     
+    let apiUrl = Bundle.main.object(forInfoDictionaryKey: "API_BASE_URL") as? String ?? ""
+    let apiKey = Bundle.main.object(forInfoDictionaryKey: "API_KEY") as? String ?? ""
+    let env = Bundle.main.object(forInfoDictionaryKey: "APP_ENV") as? String ?? ""
+
     func request(name: RequestEmitNameEnum, params:[String:Any] = [:], method: HttpMethod = HttpMethod.get) async throws -> JSON {
         debugPrint("########################")
         debugPrint("#### API CALLED with path: \(name.description)")
         debugPrint("#### API CALLED with params:")
         debugPrint((JSON(params)))
         debugPrint("########################")
+        
         
         var url:URL?
         
