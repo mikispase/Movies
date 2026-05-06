@@ -1,5 +1,11 @@
+//
+//  HttpMethod.swift
+//  TwoCodersMovie
+//
+//  Created by Dimitar Spasovski on 06/05/2026.
+//
+
 import Foundation
-import SwiftyJSON
 
 enum HttpMethod {
     case get

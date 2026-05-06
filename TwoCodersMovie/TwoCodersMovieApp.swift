@@ -6,12 +6,14 @@
 //
 
 import SwiftUI
+import SDWebImage
 
 @main
 struct TwoCodersMovieApp: App {
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+           MoviesView()
         }
     }
 }

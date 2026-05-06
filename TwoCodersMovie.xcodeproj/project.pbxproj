@@ -6,6 +6,11 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		24D455942FAB6A6C008141CA /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 24D455932FAB6A6C008141CA /* SDWebImageSwiftUI */; };
+		24D455972FAB6AA1008141CA /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 24D455962FAB6AA1008141CA /* SwiftyJSON */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		24D4557A2FAB6447008141CA /* TwoCodersMovie.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TwoCodersMovie.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -23,6 +28,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				24D455972FAB6AA1008141CA /* SwiftyJSON in Frameworks */,
+				24D455942FAB6A6C008141CA /* SDWebImageSwiftUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +72,8 @@
 			);
 			name = TwoCodersMovie;
 			packageProductDependencies = (
+				24D455932FAB6A6C008141CA /* SDWebImageSwiftUI */,
+				24D455962FAB6AA1008141CA /* SwiftyJSON */,
 			);
 			productName = TwoCodersMovie;
 			productReference = 24D4557A2FAB6447008141CA /* TwoCodersMovie.app */;
@@ -94,6 +103,10 @@
 			);
 			mainGroup = 24D455712FAB6447008141CA;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				24D455922FAB6A6C008141CA /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
+				24D455952FAB6AA0008141CA /* XCRemoteSwiftPackageReference "swiftyjson" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 24D4557B2FAB6447008141CA /* Products */;
 			projectDirPath = "";
@@ -345,6 +358,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		24D455922FAB6A6C008141CA /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImageSwiftUI";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.1.4;
+			};
+		};
+		24D455952FAB6AA0008141CA /* XCRemoteSwiftPackageReference "swiftyjson" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/swiftyjson/swiftyjson";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		24D455932FAB6A6C008141CA /* SDWebImageSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 24D455922FAB6A6C008141CA /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
+			productName = SDWebImageSwiftUI;
+		};
+		24D455962FAB6AA1008141CA /* SwiftyJSON */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 24D455952FAB6AA0008141CA /* XCRemoteSwiftPackageReference "swiftyjson" */;
+			productName = SwiftyJSON;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 24D455722FAB6447008141CA /* Project object */;
 }

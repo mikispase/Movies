@@ -1,3 +1,10 @@
+//
+//  MoviesViewModel.swift
+//  TwoCodersMovie
+//
+//  Created by Dimitar Spasovski on 06/05/2026.
+//
+
 import SwiftUI
 import Combine
 import SwiftyJSON
@@ -7,7 +14,6 @@ class MoviesViewModel : ObservableObject {
     var page = 1
     
     @Published var movies:[Movie] = []
-    
     @Published var initialLoad:Bool = true
     @Published var shoudLoadMore:Bool = true
 
@@ -16,7 +22,6 @@ class MoviesViewModel : ObservableObject {
            await getMoviews(page: page)
         }
     }
-    
     
     @MainActor
     func getMoviews(page:Int) async {
