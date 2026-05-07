@@ -12,18 +12,27 @@ enum SearcTypeEnum {
     case movie
     case series
 }
+enum DetailsTypeEnum {
+    case movie(movieId:Int)
+    case series(series:Int)
+}
 
 enum RequestEmitNameEnum {
     case discover
-    case movieDetails(movieId: Int)
+    case details(DetailsTypeEnum)
     case searchMovie(SearcTypeEnum)
 
     var description: String {
         switch self {
         case .discover:
             return "discover/movie"
-        case .movieDetails(let movieId):
-            return "movie/\(movieId)"
+        case .details(let type):
+            switch type {
+            case .movie(let movieId):
+                return "movie/\(movieId)"
+            case .series(let seriesId):
+                return "tv/\(seriesId)"
+            }
         case .searchMovie(let type):
             switch type {
             case .movie:

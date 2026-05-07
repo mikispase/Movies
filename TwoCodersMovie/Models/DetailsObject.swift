@@ -1,5 +1,5 @@
 //
-//  MovieDetails.swift
+//  DetailsObject.swift
 //  TwoCodersMovie
 //
 //  Created by Dimitar Spasovski on 06/05/2026.
@@ -9,7 +9,7 @@ import Foundation
 import SwiftyJSON
 
 // MARK: - MovieDetails
-class MovieDetails: Codable, Identifiable {
+class DetailsObject: Codable, Identifiable {
     var homepage: String?
     var voteCount: Int?
     var overview: String?

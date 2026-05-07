@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MovieDetailsHeaderView: View {
-    let model:MovieDetails
+    let model:DetailsObject
     let geo:GeometryProxy
     let nameSpace:Namespace.ID
     var action: ((FullScreenMedia) -> Void)?

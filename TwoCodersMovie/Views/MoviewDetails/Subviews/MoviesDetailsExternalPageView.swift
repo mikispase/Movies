@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MoviesDetailsExternalPageView: View {
     let url:URL
-    let model:MovieDetails
+    let model:DetailsObject
     let routerType:RouterType
     @Environment(\.colorScheme) var colorScheme
 

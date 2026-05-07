@@ -9,8 +9,9 @@ import Combine
 
 class MovieDetailsViewModel: MainViewModel {
     let movie: Movie
-    
-    @Published var moviewDetails: MovieDetails?
+    let fromSeries: Bool
+
+    @Published var moviewDetails: DetailsObject?
     
     @Published var mediaFullScreen: FullScreenMedia?
     
@@ -18,8 +19,9 @@ class MovieDetailsViewModel: MainViewModel {
     
     let routerType:RouterType
     
-    init(movie: Movie, fromMockUp:Bool = false, routerType:RouterType) {
+    init(movie: Movie, fromSeries: Bool, fromMockUp:Bool = false, routerType:RouterType) {
         self.movie = movie
+        self.fromSeries = fromSeries
         self.routerType = routerType
         
         super.init(ObjectIdentifier(Self.Type.self))
@@ -28,7 +30,7 @@ class MovieDetailsViewModel: MainViewModel {
             Task {
                 await withTaskGroup(of: Void.self) { group in
                     group.addTask(priority: .userInitiated) {  [weak self] in
-                        await self?.getMovieDetails()
+                        await self?.getDetails()
                     }
                     group.addTask(priority: .userInitiated) { [weak self] in
                         await self?.checkIsFavorite()
@@ -44,12 +46,14 @@ class MovieDetailsViewModel: MainViewModel {
     }
     
     @MainActor
-    func getMovieDetails() async {
+    func getDetails() async {
         do {
             let params = ["language": "en-US"]
-            let json = try await api.request(name: .movieDetails(movieId: movie.id), params: params)
+            let reguest = fromSeries ? RequestEmitNameEnum.details(.series(series: movie.id)) : RequestEmitNameEnum.details(.movie(movieId: movie.id))
+            
+            let json = try await api.request(name: reguest, params: params, method: .get)
             debugPrint(json)
-            moviewDetails = MovieDetails(json: json)
+            moviewDetails = DetailsObject(json: json)
             if let obj = moviewDetails {
                 phaseFetch = .success(obj)
             }
