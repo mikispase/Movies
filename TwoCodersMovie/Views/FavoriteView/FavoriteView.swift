@@ -28,7 +28,7 @@ struct FavoriteView:View {
                                   alignment: .center, spacing: 10) {
                             ForEach(favouriteMoviee, id: \.customId) { movie in
                                 Button {
-                                    let model = MovieDetailsViewModel(movieId: movie.id, routerType: .favorite)
+                                    let model = MovieDetailsViewModel(movie: movie, routerType: .favorite)
                                     favoriteRouter.append(currentView: ViewsEnum.details.rawValue, value: model)
                                     
                                 } label: {

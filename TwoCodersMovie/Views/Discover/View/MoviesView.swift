@@ -20,7 +20,7 @@ struct MoviesView: View {
                     let model = viewModel.searching ? viewModel.searchObjects : viewModel.movies
                     ForEach(model, id: \.customId) { movie in
                         Button {
-                            let model = MovieDetailsViewModel(movieId: movie.id, routerType: .home)
+                            let model = MovieDetailsViewModel(movie: movie, routerType: .home)
                             router.append(currentView: ViewsEnum.details.rawValue, value: model)
                             
                         } label: {

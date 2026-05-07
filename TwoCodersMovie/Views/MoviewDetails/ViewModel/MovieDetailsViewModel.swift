@@ -8,22 +8,22 @@ import SwiftUI
 import Combine
 
 class MovieDetailsViewModel: MainViewModel {
-    let movieId: Int
-
+    let movie: Movie
+    
     @Published var moviewDetails: MovieDetails?
-
+    
     @Published var mediaFullScreen: FullScreenMedia?
-
+    
     @Published var isFavorite: Bool = false
-
+    
     let routerType:RouterType
     
-    init(movieId: Int, fromMockUp:Bool = false, routerType:RouterType) {
-        self.movieId = movieId
+    init(movie: Movie, fromMockUp:Bool = false, routerType:RouterType) {
+        self.movie = movie
         self.routerType = routerType
         
         super.init(ObjectIdentifier(Self.Type.self))
-
+        
         if !fromMockUp {
             Task {
                 await withTaskGroup(of: Void.self) { group in
@@ -37,17 +37,17 @@ class MovieDetailsViewModel: MainViewModel {
             }
         }
     }
-
+    
     @MainActor
     deinit {
         debugPrint("deinit MovieDetailsViewModel")
     }
-
+    
     @MainActor
     func getMovieDetails() async {
         do {
             let params = ["language": "en-US"]
-            let json = try await api.request(name: .movieDetails(movieId: movieId), params: params)
+            let json = try await api.request(name: .movieDetails(movieId: movie.id), params: params)
             debugPrint(json)
             moviewDetails = MovieDetails(json: json)
             if let obj = moviewDetails {
@@ -61,12 +61,15 @@ class MovieDetailsViewModel: MainViewModel {
     
     @MainActor
     func checkIsFavorite(setValue:Bool = false) async {
-        let movie = await SwiftDataManager.shared.movie(withID: movieId)
+        let movieFromDb = await SwiftDataManager.shared.movie(withID: movie.id)
+        if movieFromDb == nil {
+            await SwiftDataManager.shared.saveMovies([self.movie])
+        }
         
         if !setValue {
-            isFavorite = movie?.myFavorite ?? false
+            isFavorite = movieFromDb?.myFavorite ?? false
         } else {
-            if let movie = movie {
+            if let movie = movieFromDb {
                 movie.myFavorite = !movie.myFavorite
                 await SwiftDataManager.shared.saveFavorite(movie: movie)
                 isFavorite = movie.myFavorite
