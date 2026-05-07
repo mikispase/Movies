@@ -108,7 +108,7 @@ struct TwoCodersMovieTests {
     func testApiFailure() async {
         do {
             _ = try await ApiManager.shared.request(
-                name: .movieDetails(movieId: -1)
+                name: .details(.movie(movieId: -1))
             )
 
             Issue.record("Expected failure")
