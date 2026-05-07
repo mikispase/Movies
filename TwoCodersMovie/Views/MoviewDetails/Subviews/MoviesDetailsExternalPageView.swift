@@ -25,7 +25,6 @@ struct MoviesDetailsExternalPageView: View {
             case .favorite:
                 favoriteRouter.append(currentView: ViewsEnum.web.rawValue, value: urlObject)
             }
-            router.append(currentView: ViewsEnum.web.rawValue, value: urlObject)
         }label: {
             FlowHStack(horizontalSpacing: 3, verticalSpacing: 0) {
                 Text("If you want se see more about")
