@@ -1,5 +1,5 @@
 //
-//  MoviewDetailsProductionContriesView.swift
+//  MovieDetailsProductionContriesView.swift
 //  TwoCodersMovie
 //
 //  Created by Dimitar Spasovski on 07/05/2026.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct MoviewDetailsProductionContriesView: View {
+struct MovieDetailsProductionContriesView: View {
     let countries: [ProductionCountry]
 
     var body: some View {
