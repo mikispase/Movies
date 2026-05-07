@@ -9,10 +9,9 @@ import Foundation
 import SwiftyJSON
 
 class Movie: NSObject, Codable, Identifiable {
-    
     // MARK: - Properties
     var id: Int?
-    var customId:String?
+    var customId: String?
     var title: String?
     var originalTitle: String?
     var overview: String?
@@ -67,7 +66,7 @@ class Movie: NSObject, Codable, Identifiable {
         isSoftcore = json["softcore"].bool
         genreIds = json["genre_ids"].arrayObject as? [Int]
     }
-    
+
     // MARK: - Codable (Decodable)
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -88,7 +87,7 @@ class Movie: NSObject, Codable, Identifiable {
         isSoftcore = try container.decodeIfPresent(Bool.self, forKey: .isSoftcore)
         genreIds = try container.decodeIfPresent([Int].self, forKey: .genreIds)
     }
-    
+
     // MARK: - Codable (Encodable)
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
@@ -109,8 +108,8 @@ class Movie: NSObject, Codable, Identifiable {
         try container.encodeIfPresent(isSoftcore, forKey: .isSoftcore)
         try container.encodeIfPresent(genreIds, forKey: .genreIds)
     }
-    
-    var posterImage:URL? {
+
+    var posterImage: URL? {
         return URL(string: "https://image.tmdb.org/t/p/w200/\(posterPath ?? "")")
     }
 }

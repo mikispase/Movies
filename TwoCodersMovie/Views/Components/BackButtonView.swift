@@ -6,7 +6,7 @@
 //
 import SwiftUI
 
-struct BackButtonView:View {
+struct BackButtonView: View {
     var body: some View {
         Image(systemName: "chevron.backward")
     }

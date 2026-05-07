@@ -5,28 +5,28 @@
 //  Created by Dimitar Spasovski on 07/05/2026.
 //
 
-
 import SwiftUI
 
 struct MoviewDetailsProductionContriesView: View {
-    let countries:[ProductionCountry]
+    let countries: [ProductionCountry]
+
     var body: some View {
-        VStack(alignment: .leading,spacing: 0) {
+        VStack(alignment: .leading, spacing: 0) {
             if countries.count > 0 {
                 Text("Production Contries")
             }
             HStack {
-                ForEach(countries, id: \.iso3166_1) { country in
+                ForEach(countries, id: \.iso) { country in
                     HStack {
-                        Text(country.flagEmoji(for: country.iso3166_1 ?? ""))
+                        Text(country.flagEmoji(for: country.iso ?? ""))
                         Text(country.name ?? "")
                             .font(.caption)
-                            .padding(.leading,3)
+                            .padding(.leading, 3)
                     }
                 }
                 Spacer()
             }
         }
-        .padding(.top,16)
+        .padding(.top, 16)
     }
 }

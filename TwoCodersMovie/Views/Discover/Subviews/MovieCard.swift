@@ -7,20 +7,18 @@
 
 import SwiftUI
 
-struct MovieCard:View {
-    let movie:Movie
-    
+struct MovieCard: View {
+    let movie: Movie
+
     var body: some View {
         VStack(alignment: .leading) {
-            
-            
-            PosterImage(url:movie.posterImage, addBlur: true)
-                .frame(width: 175, height:160)
+            PosterImage(url: movie.posterImage, addBlur: true)
+                .frame(width: 175, height: 160)
                 .overlay(content: {
-                    PosterImage(url:movie.posterImage, fit: true)
-                        .frame(width: 175, height:160)
+                    PosterImage(url: movie.posterImage, fit: true)
+                        .frame(width: 175, height: 160)
                 })
-            
+
             VStack(alignment: .leading, spacing: 0) {
                 Text(movie.title ?? "")
                     .foregroundStyle(.custom)
@@ -31,7 +29,6 @@ struct MovieCard:View {
                     .foregroundStyle(.custom)
                     .multilineTextAlignment(.leading)
                     .font(.system(size: 12))
-                
             }
             Spacer()
         }

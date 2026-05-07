@@ -41,12 +41,15 @@ struct WebView: UIViewRepresentable {
     final class Coordinator: NSObject, WKNavigationDelegate {
         var dismissAction: DismissAction?
 
-        func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        func webView(_ webView: WKWebView,
+                     decidePolicyFor navigationAction: WKNavigationAction,
+                     decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
             guard let absoluteString = navigationAction.request.url?.absoluteString else {
                 decisionHandler(.allow)
                 return
             }
-            
+            debugPrint(absoluteString)
+
             decisionHandler(.allow)
         }
 

@@ -9,10 +9,10 @@ import SwiftyJSON
 
 enum RequestEmitNameEnum {
     case discover
-    case movieDetails(movieId:Int)
+    case movieDetails(movieId: Int)
     case searchMovie
-        
-    var description:String {
+
+    var description: String {
         switch self {
         case .discover:
             return "discover/movie"
@@ -36,4 +36,4 @@ enum DataFetchPhase<T> {
 
 struct FetchTaskToken: Equatable {
     let token: Date
-} 
+}

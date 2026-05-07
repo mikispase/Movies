@@ -9,13 +9,14 @@ import SwiftUI
 import Combine
 import SwiftyJSON
 
-struct MoviesView : View {
+struct MoviesView: View {
     @StateObject var viewModel = MoviesViewModel()
-    @EnvironmentObject var router:Router
+    @EnvironmentObject var router: Router
     var body: some View {
         NavigationStack(path: $router.path) {
             ScrollView {
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: 175, maximum: 175), spacing: 10, alignment: .leading)], alignment: .center, spacing: 10) {
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 175, maximum: 175), spacing: 10, alignment: .leading)],
+                          alignment: .center, spacing: 10) {
                     ForEach(viewModel.movies, id: \.customId) { movie in
                         Button {
                             let model = MovieDetailsViewModel(movieId: movie.id ?? -1)
@@ -23,10 +24,10 @@ struct MoviesView : View {
                         } label: {
                             MovieCard(movie: movie)
                         }
-                        .frame(width: 175, height:270)
+                        .frame(width: 175, height: 270)
                     }
-                    
-                    if viewModel.movies.count > 0 && !viewModel.initialLoad && viewModel.shoudLoadMore{
+
+                    if viewModel.movies.count > 0 && !viewModel.initialLoad && viewModel.shoudLoadMore {
                         ProgressView().onAppear {
                             viewModel.loadMore()
                         }
@@ -39,8 +40,6 @@ struct MoviesView : View {
     }
 }
 
-
 #Preview {
     MoviesView()
 }
-

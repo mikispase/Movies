@@ -22,7 +22,6 @@ extension View {
     }
 }
 
-
 struct ShadowText: ViewModifier {
     func body(content: Content) -> some View {
         content
@@ -35,11 +34,10 @@ struct ShadowText: ViewModifier {
     }
 }
 
-
 struct MatchedTransitionSource<ID: Hashable>: ViewModifier {
     let id: ID
     let namespace: Namespace.ID
-    
+
     func body(content: Content) -> some View {
         if #available(iOS 18.0, *) {
             content
@@ -52,7 +50,7 @@ struct MatchedTransitionSource<ID: Hashable>: ViewModifier {
 struct AnimationTransition<ID: Hashable>: ViewModifier {
     let id: ID
     let namespace: Namespace.ID
-    
+
     func body(content: Content) -> some View {
         if #available(iOS 18.0, *) {
             content

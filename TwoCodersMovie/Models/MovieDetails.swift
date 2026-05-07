@@ -147,7 +147,8 @@ class MovieDetails: Codable, Identifiable {
         popularity = json["popularity"].double
         budget = json["budget"].int
         originCountry = json["origin_country"].arrayValue.map { $0.stringValue }
-        belongsToCollection = json["belongs_to_collection"].isEmpty ? nil : Collection(json: json["belongs_to_collection"])
+        belongsToCollection = json["belongs_to_collection"].isEmpty ?
+        nil : Collection(json: json["belongs_to_collection"])
         adult = json["adult"].bool
         tagline = json["tagline"].string
         spokenLanguages = json["spoken_languages"].arrayValue.map { SpokenLanguage(json: $0) }
@@ -164,46 +165,46 @@ class MovieDetails: Codable, Identifiable {
         revenue = json["revenue"].int
         status = json["status"].string
     }
-    
-    var posterImage:URL? {
+
+    var posterImage: URL? {
         return URL(string: "https://image.tmdb.org/t/p/w780\(posterPath ?? "")")
     }
 }
 
-
 class ProductionCountry: Codable, Identifiable {
     var name: String?
-    var iso3166_1: String?
+    var iso: String?
 
     enum CodingKeys: String, CodingKey {
         case name
-        case iso3166_1 = "iso_3166_1"
+        case iso = "iso_3166_1"
     }
 
     required init(from decoder: Decoder) throws {
-        let c = try decoder.container(keyedBy: CodingKeys.self)
-        name = try c.decodeIfPresent(String.self, forKey: .name)
-        iso3166_1 = try c.decodeIfPresent(String.self, forKey: .iso3166_1)
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        name = try container.decodeIfPresent(String.self, forKey: .name)
+        iso = try container.decodeIfPresent(String.self, forKey: .iso)
     }
 
     func encode(to encoder: Encoder) throws {
-        var c = encoder.container(keyedBy: CodingKeys.self)
-        try c.encodeIfPresent(name, forKey: .name)
-        try c.encodeIfPresent(iso3166_1, forKey: .iso3166_1)
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(name, forKey: .name)
+        try container.encodeIfPresent(iso, forKey: .iso)
     }
 
     init(json: JSON) {
         name = json["name"].string
-        iso3166_1 = json["iso_3166_1"].string
+        iso = json["iso_3166_1"].string
     }
-    
+
     func flagEmoji(for countryCode: String) -> String {
         let base: UInt32 = 127397
-        var s = ""
-        for v in countryCode.uppercased().unicodeScalars {
-            s.unicodeScalars.append(UnicodeScalar(base + v.value)!)
+        var sxx = ""
+        for uniCode in countryCode.uppercased().unicodeScalars {
+            guard let scalar = UnicodeScalar(base + uniCode.value) else { continue }
+            sxx.unicodeScalars.append(scalar)
         }
-        return s
+        return sxx
     }
 }
 
@@ -221,19 +222,19 @@ class Collection: Codable {
     }
 
     required init(from decoder: Decoder) throws {
-        let c = try decoder.container(keyedBy: CodingKeys.self)
-        backdropPath = try c.decodeIfPresent(String.self, forKey: .backdropPath)
-        id = try c.decodeIfPresent(Int.self, forKey: .id)
-        posterPath = try c.decodeIfPresent(String.self, forKey: .posterPath)
-        name = try c.decodeIfPresent(String.self, forKey: .name)
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        backdropPath = try container.decodeIfPresent(String.self, forKey: .backdropPath)
+        id = try container.decodeIfPresent(Int.self, forKey: .id)
+        posterPath = try container.decodeIfPresent(String.self, forKey: .posterPath)
+        name = try container.decodeIfPresent(String.self, forKey: .name)
     }
 
     func encode(to encoder: Encoder) throws {
-        var c = encoder.container(keyedBy: CodingKeys.self)
-        try c.encodeIfPresent(backdropPath, forKey: .backdropPath)
-        try c.encodeIfPresent(id, forKey: .id)
-        try c.encodeIfPresent(posterPath, forKey: .posterPath)
-        try c.encodeIfPresent(name, forKey: .name)
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(backdropPath, forKey: .backdropPath)
+        try container.encodeIfPresent(id, forKey: .id)
+        try container.encodeIfPresent(posterPath, forKey: .posterPath)
+        try container.encodeIfPresent(name, forKey: .name)
     }
 
     init(json: JSON) {
@@ -245,32 +246,32 @@ class Collection: Codable {
 }
 
 class SpokenLanguage: Codable {
-    var iso639_1: String?
+    var iso: String?
     var name: String?
     var englishName: String?
 
     enum CodingKeys: String, CodingKey {
-        case iso639_1 = "iso_639_1"
+        case iso = "iso_639_1"
         case name
         case englishName = "english_name"
     }
 
     required init(from decoder: Decoder) throws {
-        let c = try decoder.container(keyedBy: CodingKeys.self)
-        iso639_1 = try c.decodeIfPresent(String.self, forKey: .iso639_1)
-        name = try c.decodeIfPresent(String.self, forKey: .name)
-        englishName = try c.decodeIfPresent(String.self, forKey: .englishName)
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        iso = try container.decodeIfPresent(String.self, forKey: .iso)
+        name = try container.decodeIfPresent(String.self, forKey: .name)
+        englishName = try container.decodeIfPresent(String.self, forKey: .englishName)
     }
 
     func encode(to encoder: Encoder) throws {
-        var c = encoder.container(keyedBy: CodingKeys.self)
-        try c.encodeIfPresent(iso639_1, forKey: .iso639_1)
-        try c.encodeIfPresent(name, forKey: .name)
-        try c.encodeIfPresent(englishName, forKey: .englishName)
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(iso, forKey: .iso)
+        try container.encodeIfPresent(name, forKey: .name)
+        try container.encodeIfPresent(englishName, forKey: .englishName)
     }
 
     init(json: JSON) {
-        iso639_1 = json["iso_639_1"].string
+        iso = json["iso_639_1"].string
         name = json["name"].string
         englishName = json["english_name"].string
     }
@@ -290,19 +291,19 @@ class ProductionCompany: Codable {
     }
 
     required init(from decoder: Decoder) throws {
-        let c = try decoder.container(keyedBy: CodingKeys.self)
-        logoPath = try c.decodeIfPresent(String.self, forKey: .logoPath)
-        originCountry = try c.decodeIfPresent(String.self, forKey: .originCountry)
-        id = try c.decodeIfPresent(Int.self, forKey: .id)
-        name = try c.decodeIfPresent(String.self, forKey: .name)
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        logoPath = try container.decodeIfPresent(String.self, forKey: .logoPath)
+        originCountry = try container.decodeIfPresent(String.self, forKey: .originCountry)
+        id = try container.decodeIfPresent(Int.self, forKey: .id)
+        name = try container.decodeIfPresent(String.self, forKey: .name)
     }
 
     func encode(to encoder: Encoder) throws {
-        var c = encoder.container(keyedBy: CodingKeys.self)
-        try c.encodeIfPresent(logoPath, forKey: .logoPath)
-        try c.encodeIfPresent(originCountry, forKey: .originCountry)
-        try c.encodeIfPresent(id, forKey: .id)
-        try c.encodeIfPresent(name, forKey: .name)
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(logoPath, forKey: .logoPath)
+        try container.encodeIfPresent(originCountry, forKey: .originCountry)
+        try container.encodeIfPresent(id, forKey: .id)
+        try container.encodeIfPresent(name, forKey: .name)
     }
 
     init(json: JSON) {
@@ -321,17 +322,17 @@ class Genre: Codable {
         case name
         case id
     }
-    
+
     required init(from decoder: Decoder) throws {
-        let c = try decoder.container(keyedBy: CodingKeys.self)
-        name = try c.decodeIfPresent(String.self, forKey: .name)
-        id = try c.decodeIfPresent(Int.self, forKey: .id)
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        name = try container.decodeIfPresent(String.self, forKey: .name)
+        id = try container.decodeIfPresent(Int.self, forKey: .id)
     }
 
     func encode(to encoder: Encoder) throws {
-        var c = encoder.container(keyedBy: CodingKeys.self)
-        try c.encodeIfPresent(name, forKey: .name)
-        try c.encodeIfPresent(id, forKey: .id)
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(name, forKey: .name)
+        try container.encodeIfPresent(id, forKey: .id)
     }
 
     init(json: JSON) {

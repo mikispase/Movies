@@ -7,49 +7,50 @@
 
 import SwiftUI
 
-struct MovieDetailsView : View {
-    @StateObject var viewModel:MovieDetailsViewModel
+struct MovieDetailsView: View {
+    @StateObject var viewModel: MovieDetailsViewModel
     @EnvironmentObject var router: Router
     @Namespace private var namespace
-    
+
     var body: some View {
         GeometryReader { geo in
             VStack {
                 if viewModel.isLoading {
                     ProgressView()
-                }else {
+                } else {
                     if let model = viewModel.moviewDetails {
                         ScrollView {
                             VStack(alignment: .leading) {
                                 if let url = model.posterImage {
-                                    VStack{
-                                        PosterImage(url:url, addBlur: true)
-                                            .frame(height:geo.size.height / 2)
+                                    VStack {
+                                        PosterImage(url: url, addBlur: true)
+                                            .frame(height: geo.size.height / 2)
                                             .overlay(content: {
-                                                PosterImage(url:url, fit: true)
-                                                    .frame(height:geo.size.height / 2)
-                                                    .modifier(MatchedTransitionSource(id:  "fullScreenMedia", namespace: namespace))
-                                                
+                                                PosterImage(url: url, fit: true)
+                                                    .frame(height: geo.size.height / 2)
+                                                    .modifier(
+                                                        MatchedTransitionSource(id: "fullScreenMedia",
+                                                                                namespace: namespace)
+                                                    )
                                             })
                                     }.onTapGesture {
                                         viewModel.mediaFullScreen = FullScreenMedia(url: url)
                                     }
                                 }
-                                
+
                                 VStack(alignment: .leading, spacing: 0) {
                                     if let overview = model.overview {
                                         MovieDetailsOverviewView(overView: overview)
                                     }
-                                    
+
                                     if let  releaseDate = model.releaseDate {
                                         MovieDetailsReleaseDateView(releaseDate: releaseDate)
                                     }
-                                    
-                                    if let countries = viewModel.moviewDetails?.productionCountries{
+                                    if let countries = viewModel.moviewDetails?.productionCountries {
                                         MoviewDetailsProductionContriesView(countries: countries)
                                     }
-                                    
-                                    Button{
+
+                                    Button {
                                         if let url = URL(string: model.homepage ?? "") {
                                             let urlObject = Web(url: url)
                                             router.append(currentView: ViewsEnum.web.rawValue, value: urlObject)
@@ -90,7 +91,7 @@ struct MovieDetailsView : View {
             .fullScreenCover(item: $viewModel.mediaFullScreen, content: { fullScreenMedia in
                 ShowImageFullScreen(url: fullScreenMedia.url.absoluteString)
                         .modifier(AnimationTransition(id: "fullScreenMedia", namespace: namespace))
-               
+
             })
         }
     }

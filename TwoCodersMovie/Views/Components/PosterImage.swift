@@ -7,12 +7,12 @@
 
 import SwiftUI
 import SDWebImageSwiftUI
- 
-struct PosterImage : View {
-    var url:URL?
-    var placeholder:String  = ""
-    var fit:Bool  = false
-    var addBlur:Bool  = false
+
+struct PosterImage: View {
+    var url: URL?
+    var placeholder: String  = ""
+    var fit: Bool  = false
+    var addBlur: Bool  = false
 
     var body: some View {
         GeometryReader { geometry in
@@ -25,21 +25,19 @@ struct PosterImage : View {
                     .if(!fit) { view in
                         view.scaledToFill()
                     }
-                    .frame(width:  geometry.size.width , height:geometry.size.height)
+                    .frame(width: geometry.size.width, height: geometry.size.height)
                     .clipped()
-                   // .foregroundStyle(.clear)
-//                    .background(Color.gray.opacity(0.1))
             } placeholder: {
                 if placeholder == "" {
                     RoundedRectangle(cornerRadius: 0, style: .continuous)
-                        .frame(width: geometry.size.width, height:geometry.size.height)
+                        .frame(width: geometry.size.width, height: geometry.size.height)
                         .foregroundStyle(.clear)
                         .background(Color.gray.opacity(0.1))
-                }else {
+                } else {
                     Image(placeholder)
                         .resizable()
                         .scaledToFill()
-                        .frame(width: geometry.size.width, height:geometry.size.height)
+                        .frame(width: geometry.size.width, height: geometry.size.height)
                         .clipped()
                 }
             }

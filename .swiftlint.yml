@@ -1,0 +1,17 @@
+disabled_rules:
+  - colon            
+  - line_length       
+  - trailing_whitespace 
+  - empty_enum_arguments
+
+opt_in_rules:
+  - force_unwrapping 
+
+function_body_length:
+  warning: 50         
+  error: 100         
+
+excluded:
+  - Pods      
+  - Carthage
+  - Build

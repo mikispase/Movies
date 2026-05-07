@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		24B684822FABFA9F002FF66C /* Dev.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 24B684812FABFA9F002FF66C /* Dev.xcconfig */; };
 		24B684842FABFAB6002FF66C /* Prod.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 24B684832FABFAB6002FF66C /* Prod.xcconfig */; };
+		24B684ED2FAC153A002FF66C /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 24B684EC2FAC153A002FF66C /* Config.xcconfig */; };
 		24D455942FAB6A6C008141CA /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 24D455932FAB6A6C008141CA /* SDWebImageSwiftUI */; };
 		24D455972FAB6AA1008141CA /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 24D455962FAB6AA1008141CA /* SwiftyJSON */; };
 /* End PBXBuildFile section */
@@ -16,6 +17,7 @@
 /* Begin PBXFileReference section */
 		24B684812FABFA9F002FF66C /* Dev.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Dev.xcconfig; sourceTree = "<group>"; };
 		24B684832FABFAB6002FF66C /* Prod.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Prod.xcconfig; sourceTree = "<group>"; };
+		24B684EC2FAC153A002FF66C /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		24D4557A2FAB6447008141CA /* TwoCodersMovie.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TwoCodersMovie.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -56,6 +58,7 @@
 		24D455712FAB6447008141CA = {
 			isa = PBXGroup;
 			children = (
+				24B684EC2FAC153A002FF66C /* Config.xcconfig */,
 				24B684832FABFAB6002FF66C /* Prod.xcconfig */,
 				24B684812FABFA9F002FF66C /* Dev.xcconfig */,
 				24D4557C2FAB6447008141CA /* TwoCodersMovie */,
@@ -85,6 +88,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				24B684EB2FAC09D7002FF66C /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				24D4557C2FAB6447008141CA /* TwoCodersMovie */,
@@ -125,6 +129,7 @@
 			packageReferences = (
 				24D455922FAB6A6C008141CA /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
 				24D455952FAB6AA0008141CA /* XCRemoteSwiftPackageReference "swiftyjson" */,
+				24B684E92FAC09BB002FF66C /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 24D4557B2FAB6447008141CA /* Products */;
@@ -141,6 +146,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				24B684ED2FAC153A002FF66C /* Config.xcconfig in Resources */,
 				24B684822FABFA9F002FF66C /* Dev.xcconfig in Resources */,
 				24B684842FABFAB6002FF66C /* Prod.xcconfig in Resources */,
 			);
@@ -157,6 +163,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		24B684EB2FAC09D7002FF66C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 24B684EA2FAC09D7002FF66C /* SwiftLintBuildToolPlugin */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		24B6847B2FABF8CB002FF66C /* Dev */ = {
@@ -228,6 +241,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 83X4658Q6Z;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
@@ -325,6 +339,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 83X4658Q6Z;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
@@ -477,11 +492,13 @@
 		};
 		24D455862FAB6449008141CA /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 24B684EC2FAC153A002FF66C /* Config.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 83X4658Q6Z;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
@@ -520,11 +537,13 @@
 		};
 		24D455872FAB6449008141CA /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 24B684EC2FAC153A002FF66C /* Config.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 83X4658Q6Z;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
@@ -589,6 +608,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		24B684E92FAC09BB002FF66C /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SimplyDanny/SwiftLintPlugins";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.63.2;
+			};
+		};
 		24D455922FAB6A6C008141CA /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SDWebImage/SDWebImageSwiftUI";
@@ -608,6 +635,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		24B684EA2FAC09D7002FF66C /* SwiftLintBuildToolPlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 24B684E92FAC09BB002FF66C /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */;
+			productName = "plugin:SwiftLintBuildToolPlugin";
+		};
 		24D455932FAB6A6C008141CA /* SDWebImageSwiftUI */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 24D455922FAB6A6C008141CA /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
