@@ -9,6 +9,8 @@ import SwiftUI
 
 struct MovieCard: View {
     let movie: Movie
+    @Environment(\.colorScheme) var colorScheme
+
 
     var body: some View {
         VStack(alignment: .leading) {
@@ -21,12 +23,12 @@ struct MovieCard: View {
 
             VStack(alignment: .leading, spacing: 0) {
                 Text(movie.title ?? "")
-                    .foregroundStyle(.custom)
+                    .foregroundStyle(colorScheme == .light ? .black : .white)
                     .multilineTextAlignment(.leading)
                     .font(.system(size: 14, weight: .semibold))
 
                 Text(movie.overview?.truncated(toLength: 100) ?? "")
-                    .foregroundStyle(.custom)
+                    .foregroundStyle(colorScheme == .light ? .black : .white)
                     .multilineTextAlignment(.leading)
                     .font(.system(size: 12))
             }

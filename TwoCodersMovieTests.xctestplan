@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "EC8CF81C-6308-4CE2-9878-E9C70E544104",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "performanceAntipatternCheckerEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:TwoCodersMovie.xcodeproj",
+        "identifier" : "24B684F92FAC2693002FF66C",
+        "name" : "TwoCodersMovieTests"
+      }
+    }
+  ],
+  "version" : 1
+}

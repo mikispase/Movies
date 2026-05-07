@@ -11,16 +11,19 @@ import SwiftyJSON
 
 class MoviesViewModel: MainViewModel {
     var page = 1
+    var totalPages = 0
 
     @Published var movies: [Movie] = []
     @Published var initialLoad: Bool = true
     @Published var shoudLoadMore: Bool = true
 
-    init() {
+    init(fromMockUp:Bool = false) {
         super.init(ObjectIdentifier(Self.Type.self))
 
-        Task {
-           await getMoviews(page: page)
+        if !fromMockUp {
+            Task {
+                await getMoviews(page: page)
+            }
         }
     }
 
@@ -36,7 +39,9 @@ class MoviesViewModel: MainViewModel {
             ]
 
             let json =  try await api.request(name: .discover, params: params, method: .get)
-            let totalPages = json["total_pages"].intValue
+            if totalPages == 0 {
+                totalPages = json["total_pages"].intValue
+            }
             guard let results = json["results"].array else {  return }
 
             var moviesList: [Movie] = []
@@ -45,6 +50,7 @@ class MoviesViewModel: MainViewModel {
                 moviesList.append(movie)
             }
             self.movies.append(contentsOf: moviesList)
+            self.phaseFetch = .success(self.movies)
 
             SDImagePreloader.shared.preload(urls: moviesList.compactMap({ $0.posterImage }))
 
@@ -52,10 +58,14 @@ class MoviesViewModel: MainViewModel {
                 initialLoad = false
             }
 
-            if page > totalPages {
+            if page >= totalPages {
                 shoudLoadMore = false
             }
+            
+            checkShoudLoadMore()
+            
         } catch {
+            setError(error)
             debugPrint(error)
         }
     }
@@ -65,6 +75,12 @@ class MoviesViewModel: MainViewModel {
 
         Task { @MainActor in
           await getMoviews(page: page)
+        }
+    }
+    
+    func checkShoudLoadMore() {
+        if page >= totalPages {
+            shoudLoadMore = false
         }
     }
 }

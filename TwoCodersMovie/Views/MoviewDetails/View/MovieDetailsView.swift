@@ -63,7 +63,6 @@ struct MovieDetailsView: View {
         .fullScreenCover(item: $viewModel.mediaFullScreen, content: { fullScreenMedia in
             ShowImageFullScreen(url: fullScreenMedia.url.absoluteString)
                 .modifier(AnimationTransition(id: "fullScreenMedia", namespace: namespace))
-            
         })
     }
 }

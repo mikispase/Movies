@@ -10,6 +10,8 @@ import SwiftUI
 struct MoviewDetailsExternalPageView: View {
     let url:URL
     let model:MovieDetails
+    @Environment(\.colorScheme) var colorScheme
+
     
     @EnvironmentObject var router: Router
     
@@ -20,12 +22,12 @@ struct MoviewDetailsExternalPageView: View {
         }label: {
             FlowHStack(horizontalSpacing: 3, verticalSpacing: 0) {
                 Text("If you want se see more about")
-                    .foregroundStyle(.custom)
+                    .foregroundStyle(colorScheme == .light ? .black : .white)
                 Text("\(model.originalTitle ?? "")")
-                    .foregroundStyle(.custom)
+                    .foregroundStyle(colorScheme == .light ? .black : .white)
                 Text("Visit original page")
                     .underline()
-                    .foregroundStyle(.custom)
+                    .foregroundStyle(colorScheme == .light ? .black : .white)
             }
         }
         .padding(.top)

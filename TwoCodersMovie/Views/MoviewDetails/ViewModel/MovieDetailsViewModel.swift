@@ -14,12 +14,14 @@ class MovieDetailsViewModel: MainViewModel {
 
     @Published var mediaFullScreen: FullScreenMedia?
 
-    init(movieId: Int) {
+    init(movieId: Int, fromMockUp:Bool = false) {
         self.movieId = movieId
         super.init(ObjectIdentifier(Self.Type.self))
 
-        Task {
-            await getMovieDetails()
+        if !fromMockUp {
+            Task {
+                await getMovieDetails()
+            }
         }
     }
 
