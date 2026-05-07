@@ -80,9 +80,6 @@ class MoviesViewModel: MainViewModel {
            
             await SwiftDataManager.shared.saveMovies(movies)
             
-            let list = await  SwiftDataManager.shared.getAllMovies()
-            debugPrint(list)
-            
         } catch {
             setError(error)
             debugPrint(error)
