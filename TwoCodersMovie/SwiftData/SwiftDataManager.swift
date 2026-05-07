@@ -153,6 +153,11 @@ extension SwiftDataManager {
     }
     
     @MainActor
+    func getMovieById(id: Int) async -> Movie? {
+        await dbActor.getMovie(id: id)
+    }
+    
+    @MainActor
     func saveFavorite(movie: Movie) async {
         do {
            try await dbActor.saveFavorite(movie)
