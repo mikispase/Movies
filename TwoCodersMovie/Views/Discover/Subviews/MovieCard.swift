@@ -11,7 +11,6 @@ struct MovieCard: View {
     let movie: Movie
     @Environment(\.colorScheme) var colorScheme
 
-
     var body: some View {
         VStack(alignment: .leading) {
             PosterImage(url: movie.posterImage, addBlur: true)

@@ -92,7 +92,7 @@ class Movie: NSObject, Codable, Identifiable {
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(id, forKey: .id)
-        try container.encodeIfPresent(customId, forKey: .id)
+        try container.encodeIfPresent(customId, forKey: .customId)
         try container.encodeIfPresent(title, forKey: .title)
         try container.encodeIfPresent(originalTitle, forKey: .originalTitle)
         try container.encodeIfPresent(overview, forKey: .overview)

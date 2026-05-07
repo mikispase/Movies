@@ -66,7 +66,7 @@ class ApiManager {
         let baseUrl = String(format: "%@/%@", apiUrl, pathCompoment)
         var components = URLComponents(string: baseUrl)
         components?.queryItems = params.map {
-            URLQueryItem(name: $0.key, value: "\($0.value)")
+            URLQueryItem(name: $0.key, value: String(describing: $0.value))
         }
         return components?.url
     }

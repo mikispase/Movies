@@ -6,11 +6,18 @@
 //
 import Foundation
 import SwiftyJSON
+import Combine
+
+
+enum SearcTypeEnim {
+    case movie
+    case series
+}
 
 enum RequestEmitNameEnum {
     case discover
     case movieDetails(movieId: Int)
-    case searchMovie
+    case searchMovie(SearcTypeEnim)
 
     var description: String {
         switch self {
@@ -18,14 +25,16 @@ enum RequestEmitNameEnum {
             return "discover/movie"
         case .movieDetails(let movieId):
             return "movie/\(movieId)"
-        case .searchMovie:
-            return ""
+        case .searchMovie(let type):
+            switch type {
+            case .movie:
+                return "search/movie"
+            case .series:
+                return "search/tv"
+            }
         }
     }
 }
-
-import SwiftUI
-import Combine
 
 enum DataFetchPhase<T> {
     case empty
