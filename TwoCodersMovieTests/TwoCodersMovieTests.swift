@@ -48,7 +48,7 @@ struct TwoCodersMovieTests {
         #expect(isAdult == false)
         
         do {
-            let result = try await ApiManager.shared.request(name: .searchMovie, method: .get)
+            let result = try await ApiManager.shared.request(name: .searchMovie(.movie), method: .get)
             #expect(result == JSON.null)
             #expect(result == JSON.null)
         }catch {

@@ -8,8 +8,7 @@ import Foundation
 import SwiftyJSON
 import Combine
 
-
-enum SearcTypeEnim {
+enum SearcTypeEnum {
     case movie
     case series
 }
@@ -17,7 +16,7 @@ enum SearcTypeEnim {
 enum RequestEmitNameEnum {
     case discover
     case movieDetails(movieId: Int)
-    case searchMovie(SearcTypeEnim)
+    case searchMovie(SearcTypeEnum)
 
     var description: String {
         switch self {

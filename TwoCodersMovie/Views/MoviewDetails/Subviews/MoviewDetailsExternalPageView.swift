@@ -12,7 +12,6 @@ struct MoviewDetailsExternalPageView: View {
     let model:MovieDetails
     @Environment(\.colorScheme) var colorScheme
 
-    
     @EnvironmentObject var router: Router
     
     var body: some View {
