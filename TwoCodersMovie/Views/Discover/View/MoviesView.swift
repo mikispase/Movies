@@ -28,7 +28,7 @@ struct MoviesView: View {
                         }
                         .frame(width: 175, height: 270)
                         .overlay(alignment: .topTrailing) {
-                            FavoriteHeart(id: movie.id )
+                            FavoriteHeart(model: movie)
                                 .offset(x: -15, y: 15)
                         }
                     }
