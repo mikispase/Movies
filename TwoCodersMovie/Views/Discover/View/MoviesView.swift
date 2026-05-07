@@ -20,12 +20,17 @@ struct MoviesView: View {
                     let model = viewModel.searching ? viewModel.searchObjects : viewModel.movies
                     ForEach(model, id: \.customId) { movie in
                         Button {
-                            let model = MovieDetailsViewModel(movieId: movie.id ?? -1)
+                            let model = MovieDetailsViewModel(movieId: movie.id, routerType: .home)
                             router.append(currentView: ViewsEnum.details.rawValue, value: model)
+                            
                         } label: {
                             MovieCard(movie: movie)
                         }
                         .frame(width: 175, height: 270)
+                        .overlay(alignment: .topTrailing) {
+                            FavoriteHeart(id: movie.customId ?? "")
+                                .offset(x: -15, y: 15)
+                        }
                     }
 
                     if viewModel.searching {
@@ -46,7 +51,7 @@ struct MoviesView: View {
             .modifier(NavigationModifier())
             .navigationTitle("Discover")
         }
-        .searchable(text: $viewModel.searchText, placement: .navigationBarDrawer(displayMode: .always))
+        .searchable(text: $viewModel.searchText, placement: .navigationBarDrawer(displayMode: .automatic))
         .searchScopes($viewModel.searchScope, activation: .onSearchPresentation) {
             ForEach(SearchScope.allCases, id: \.self) { scope in
                 Text(scope.rawValue.capitalized)

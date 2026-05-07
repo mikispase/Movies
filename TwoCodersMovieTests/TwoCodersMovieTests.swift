@@ -29,7 +29,7 @@ struct TwoCodersMovieTests {
             Issue.record("No movies found")
             return
         }
-        guard let _ = movie.id else {
+        guard let _ = movie.customId else {
             Issue.record("Movie ID is nil")
             return
         }
@@ -46,15 +46,6 @@ struct TwoCodersMovieTests {
             return
         }
         #expect(isAdult == false)
-        
-        do {
-            let result = try await ApiManager.shared.request(name: .searchMovie(.movie), method: .get)
-            #expect(result == JSON.null)
-            #expect(result == JSON.null)
-        }catch {
-            #expect((error as NSError).code == 1001)
-            
-        }
     }
     
     @Test("Check formats ID", arguments: ["123", "321", "ID-999"])
@@ -86,16 +77,6 @@ struct TwoCodersMovieTests {
     }
     
     @Test
-    func testMovieWithoutID() {
-        let json = JSON([
-            "title": "Test Movie"
-        ])
-
-        let movie = Movie(json: json)
-        #expect(movie.id == nil)
-    }
-        
-    @Test
     func testMovieParsing() {
         let json = JSON([
             "id": 100,
@@ -119,7 +100,6 @@ struct TwoCodersMovieTests {
     func testMovieInvalidParsing() {
         let json = JSON([:])
         let movie = Movie(json: json)
-        #expect(movie.id == nil)
         #expect(movie.title == nil)
         #expect(movie.posterPath == nil)
     }
@@ -172,6 +152,7 @@ struct TwoCodersMovieTests {
             let movies = try decoder.decode([Movie].self, from:  JSON(results).rawData())
             #expect(movies.count > 0)
         }catch {
+            debugPrint(error)
             Issue.record("Expected failure")
         }
     }
@@ -181,11 +162,31 @@ struct TwoCodersMovieTests {
         do {
             let json = try await ApiManager.shared.request(name: .discover, method: .get)
             let decoder = JSONDecoder()
-            let movies = try decoder.decode([Movie].self, from:  json.rawData())
+            let _ = try decoder.decode([Movie].self, from: json.rawData())
             Issue.record("Expected failure")
         }catch {
             #expect(true)
         }
     }
-
+    
+    @Test
+    func searchMovieMissedQuery() async {
+        do {
+            let _ = try await ApiManager.shared.request(name: .searchMovie(.movie), method: .get)
+            Issue.record("Expected failure")
+        }catch {
+            #expect((error as NSError).code == 1001)
+        }
+    }
+    
+    @Test
+    func searchSeriesMissedQuery() async {
+        do {
+            let result = try await ApiManager.shared.request(name: .searchMovie(.series), method: .get)
+            #expect(result == JSON.null)
+            #expect(result == JSON.null)
+        }catch {
+            #expect((error as NSError).code == 1001)
+        }
+    }
 }

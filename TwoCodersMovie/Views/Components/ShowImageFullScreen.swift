@@ -19,6 +19,7 @@ struct ShowImageFullScreen: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .edgesIgnoringSafeArea(.all)
                 .toolbar {
+#if canImport(UIKit)
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Button {
                             dismiss()
@@ -27,6 +28,8 @@ struct ShowImageFullScreen: View {
                                 .foregroundStyle(.white)
                         }
                     }
+#endif
+
                 }
         }
     }

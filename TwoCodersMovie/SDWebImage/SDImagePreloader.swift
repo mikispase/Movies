@@ -6,7 +6,6 @@
 //
 
 import SDWebImage
-import UIKit
 
 final class SDImagePreloader {
     static let shared = SDImagePreloader()

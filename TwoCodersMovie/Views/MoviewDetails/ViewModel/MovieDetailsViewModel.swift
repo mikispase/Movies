@@ -14,13 +14,26 @@ class MovieDetailsViewModel: MainViewModel {
 
     @Published var mediaFullScreen: FullScreenMedia?
 
-    init(movieId: Int, fromMockUp:Bool = false) {
+    @Published var isFavorite: Bool = false
+
+    let routerType:RouterType
+    
+    init(movieId: Int, fromMockUp:Bool = false, routerType:RouterType) {
         self.movieId = movieId
+        self.routerType = routerType
+        
         super.init(ObjectIdentifier(Self.Type.self))
 
         if !fromMockUp {
             Task {
-                await getMovieDetails()
+                await withTaskGroup(of: Void.self) { group in
+                    group.addTask(priority: .userInitiated) {  [weak self] in
+                        await self?.getMovieDetails()
+                    }
+                    group.addTask(priority: .userInitiated) { [weak self] in
+                        await self?.checkIsFavorite()
+                    }
+                }
             }
         }
     }
@@ -37,9 +50,27 @@ class MovieDetailsViewModel: MainViewModel {
             let json = try await api.request(name: .movieDetails(movieId: movieId), params: params)
             debugPrint(json)
             moviewDetails = MovieDetails(json: json)
-            isLoading = false
+            if let obj = moviewDetails {
+                phaseFetch = .success(obj)
+            }
         } catch {
+            setError(error)
             debugPrint(error)
+        }
+    }
+    
+    @MainActor
+    func checkIsFavorite(setValue:Bool = false) async {
+        let movie = await SwiftDataManager.shared.movie(withID: movieId)
+        
+        if !setValue {
+            isFavorite = movie?.myFavorite ?? false
+        } else {
+            if let movie = movie {
+                movie.myFavorite = !movie.myFavorite
+                await SwiftDataManager.shared.saveFavorite(movie: movie)
+                isFavorite = movie.myFavorite
+            }
         }
     }
 }

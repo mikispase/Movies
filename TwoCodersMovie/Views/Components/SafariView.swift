@@ -4,6 +4,7 @@
 //
 //  Created by Dimitar Spasovski on 06/05/2026.
 //
+#if canImport(UIKit)
 import SwiftUI
 import SafariServices
 
@@ -40,3 +41,4 @@ struct SafariView: UIViewControllerRepresentable {
         return coordinator
     }
 }
+#endif

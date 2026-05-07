@@ -47,6 +47,7 @@ struct MatchedTransitionSource<ID: Hashable>: ViewModifier {
         }
     }
 }
+
 struct AnimationTransition<ID: Hashable>: ViewModifier {
     let id: ID
     let namespace: Namespace.ID

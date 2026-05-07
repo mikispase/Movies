@@ -7,10 +7,12 @@
 
 import SwiftUI
 import SDWebImage
+import SwiftData
 
 @main
 struct TwoCodersMovieApp: App {
     @StateObject var router = Router()
+    @StateObject var favoriteRouter = FavoriteRouter()
 
     init() {
         SDImageCache.shared.config.maxMemoryCount = 1
@@ -19,8 +21,11 @@ struct TwoCodersMovieApp: App {
 
     var body: some Scene {
         WindowGroup {
-           MoviesView()
+           Tabview()
                 .environmentObject(router)
+                .environmentObject(favoriteRouter)
+                .modelContainer(SwiftDataManager.shared.modelContainer)
+                .modelContext(SwiftDataManager.shared.modelContext)
         }
     }
 }

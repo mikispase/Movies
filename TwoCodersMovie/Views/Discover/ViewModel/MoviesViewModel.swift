@@ -51,7 +51,7 @@ class MoviesViewModel: MainViewModel {
                 "sort_by": "popularity.desc",
                 "page": page
             ]
-
+            
             let json =  try await api.request(name: .discover, params: params, method: .get)
             if totalPages == 0 {
                 totalPages = json["total_pages"].intValue
@@ -77,13 +77,21 @@ class MoviesViewModel: MainViewModel {
             }
             
             checkShoudLoadMore()
+           
+            await SwiftDataManager.shared.saveMovies(movies)
+            
+            let list = await  SwiftDataManager.shared.getAllMovies()
+            debugPrint(list)
             
         } catch {
             setError(error)
             debugPrint(error)
+            
+            self.movies = await SwiftDataManager.shared.getAllMovies()
+            
         }
     }
-
+    
     func loadMore() {
         if searching {
             pageSearch+=1

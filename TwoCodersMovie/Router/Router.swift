@@ -8,6 +8,7 @@
 import SwiftUI
 import Combine
 
+class FavoriteRouter: Router { }
 class Router: ObservableObject {
     @Published var currentView: String = ""
     @Published var current: [String] = []
@@ -61,6 +62,30 @@ class Router: ObservableObject {
         self.currentView = ""
         lastPathCount = path.count
     }
+}
+
+enum RouterType: Sendable {
+    case home
+    case favorite
+ 
+    init(int: Int) {
+        switch int {
+        case 0: self = .home
+        case 1: self = .favorite
+        default : self = .home
+        }
+    }
+    
+    init(name: String) {
+        switch name {
+        case "home":
+            self = .home
+        case "favorites":
+            self = .favorite
+        default : self = .home
+        }
+    }
+
 }
 
 public struct NavigationModifier: ViewModifier {

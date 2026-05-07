@@ -27,6 +27,7 @@ struct MovieDetailsHeaderView: View {
                                                             namespace: nameSpace)
                                 )
                         })
+                        .ignoresSafeArea(.all, edges: .top)
                 }.onTapGesture {
                     action?(FullScreenMedia(url: url))
                 }

@@ -52,6 +52,7 @@
 				"Extensions/String+Extensions.swift",
 				Models/Movie.swift,
 				SDWebImage/SDImagePreloader.swift,
+				SwiftData/SwiftDataManager.swift,
 				Views/Discover/ViewModel/MoviesViewModel.swift,
 				Views/MainViewModel/MainViewModel.swift,
 				Views/ViewEnum/ViewEnums.swift,

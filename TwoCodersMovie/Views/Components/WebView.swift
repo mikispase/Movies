@@ -5,6 +5,7 @@
 //  Created by Dimitar Spasovski on 06/05/2026.
 //
 
+#if canImport(UIKit)
 import UIKit
 import SwiftUI
 import SafariServices
@@ -58,3 +59,4 @@ struct WebView: UIViewRepresentable {
         }
     }
 }
+#endif

@@ -7,10 +7,13 @@
 
 import Foundation
 import SwiftyJSON
+import SwiftData
 
-class Movie: NSObject, Codable, Identifiable {
+@Model
+class Movie: Codable, Identifiable {
     // MARK: - Properties
-    var id: Int?
+    @Attribute(.unique)
+    var id: Int
     var customId: String?
     var title: String?
     var originalTitle: String?
@@ -26,6 +29,7 @@ class Movie: NSObject, Codable, Identifiable {
     var hasVideo: Bool?
     var isSoftcore: Bool?
     var genreIds: [Int]?
+    var myFavorite:Bool = false
 
     // MARK: - Coding Keys
     enum CodingKeys: String, CodingKey {
@@ -45,11 +49,13 @@ class Movie: NSObject, Codable, Identifiable {
         case hasVideo = "video"
         case isSoftcore = "softcore"
         case genreIds = "genre_ids"
+        case myFavorite = "myFavorite"
+
     }
 
     // MARK: - SwiftyJSON Initializer
     init(json: JSON) {
-        id = json["id"].int
+        id = json["id"].intValue
         customId = UUID().uuidString
         title = json["title"].string
         originalTitle = json["original_title"].string
@@ -70,7 +76,7 @@ class Movie: NSObject, Codable, Identifiable {
     // MARK: - Codable (Decodable)
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.decodeIfPresent(Int.self, forKey: .id)
+        id = try container.decode(Int.self, forKey: .id)
         customId = try container.decodeIfPresent(String.self, forKey: .customId)
         title = try container.decodeIfPresent(String.self, forKey: .title)
         originalTitle = try container.decodeIfPresent(String.self, forKey: .originalTitle)
@@ -86,6 +92,7 @@ class Movie: NSObject, Codable, Identifiable {
         hasVideo = try container.decodeIfPresent(Bool.self, forKey: .hasVideo)
         isSoftcore = try container.decodeIfPresent(Bool.self, forKey: .isSoftcore)
         genreIds = try container.decodeIfPresent([Int].self, forKey: .genreIds)
+        myFavorite = try container.decodeIfPresent(Bool.self, forKey: .myFavorite) ?? false
     }
 
     // MARK: - Codable (Encodable)
@@ -107,6 +114,7 @@ class Movie: NSObject, Codable, Identifiable {
         try container.encodeIfPresent(hasVideo, forKey: .hasVideo)
         try container.encodeIfPresent(isSoftcore, forKey: .isSoftcore)
         try container.encodeIfPresent(genreIds, forKey: .genreIds)
+        try container.encodeIfPresent(myFavorite, forKey: .myFavorite)
     }
 
     var posterImage: URL? {
