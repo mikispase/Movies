@@ -31,5 +31,15 @@ final class Test: XCTestCase {
             // Put the code you want to measure the time of here.
         }
     }
+    
+    func testNewTest() async{
+        let model = MoviesViewModel(fromMockUp: true)
+        await model.getMoviews(page: 1)
+        model.loadMore()
+        
+        XCTAssertEqual(model.page, 2)
+    }
+    
+   
 
 }

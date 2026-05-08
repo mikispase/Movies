@@ -36,9 +36,8 @@ class MoviesViewModel: MainViewModel {
             Task {
                 await getMoviews(page: page)
             }
+            setupSearch()
         }
-        
-        setupSearch()
     }
 
     @MainActor
