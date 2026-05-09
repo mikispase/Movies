@@ -29,7 +29,10 @@ struct CastMember {
     }
     
     var posterImage: URL? {
-        return URL(string: "https://image.tmdb.org/t/p/w200\(profilePath ?? "")")
+        if let profilePath = profilePath {
+            return URL(string: "https://image.tmdb.org/t/p/w200\(profilePath)")
+        }
+        return nil
     }
 }
 

@@ -13,8 +13,10 @@ struct MoviewDetailCastView: View {
     @State var mediaFullScreenCast:FullScreenMedia?
     var body: some View {
         VStack(alignment: .leading) {
-            Text("Cast")
-                .font(.headline)
+            if credit.cast.count > 0 {
+                Text("Cast")
+                    .font(.headline)
+            }
             
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(alignment: .top) {

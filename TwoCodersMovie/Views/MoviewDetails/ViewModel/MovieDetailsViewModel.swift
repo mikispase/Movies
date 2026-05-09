@@ -59,10 +59,11 @@ class MovieDetailsViewModel: MainViewModel {
             moviewDetails = DetailsObject(json: json)
             
             let requestCredit = movie.hasVideo ?? true ? RequestEmitNameEnum.details(.credit(.series(id: movie.id))) : RequestEmitNameEnum.details(.credit(.movie(id: movie.id)))
-            let creditJson = try await api.request(name: requestCredit, params: params, method: .get)
-            let creditResponce = CreditsResponse(json: creditJson)
-            withAnimation {
-                self.credit = creditResponce
+            if let creditJson = try? await api.request(name: requestCredit, params: params, method: .get) {
+                let creditResponce = CreditsResponse(json: creditJson)
+                withAnimation {
+                    self.credit = creditResponce
+                }
             }
             
             if let obj = moviewDetails {

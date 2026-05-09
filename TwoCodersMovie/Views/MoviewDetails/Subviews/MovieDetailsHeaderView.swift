@@ -17,12 +17,11 @@ struct MovieDetailsHeaderView: View {
         let isLandscape = geo.size.width > geo.size.height
         let divider = UIDevice.isIpad ? isLandscape ? 1.5 : 2 : isLandscape ? 1.2 : 2
         VStack(alignment: .leading) {
-            if let url = model.posterImage {
                 VStack {
-                    PosterImage(url: url, addBlur: true)
+                    PosterImage(url: model.posterImage, addBlur: true)
                         .frame(height: geo.size.height / CGFloat(divider) )
                         .overlay(content: {
-                            PosterImage(url: url, fit: true)
+                            PosterImage(url: model.posterImage, fit: true)
                                 .frame(height: geo.size.height / CGFloat(divider) )
                                 .modifier(
                                     MatchedTransitionSource(id: "fullScreenMedia",
@@ -31,9 +30,10 @@ struct MovieDetailsHeaderView: View {
                         })
                         .ignoresSafeArea(.all, edges: .top)
                 }.onTapGesture {
-                    action?(FullScreenMedia(url: url))
+                    if let url = model.posterImage {
+                        action?(FullScreenMedia(url: url))
+                    }
                 }
-            }
         }
     }
 }

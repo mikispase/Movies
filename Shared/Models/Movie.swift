@@ -118,10 +118,16 @@ class Movie: Codable, Identifiable {
     }
 
     var posterImage: URL? {
-        return URL(string: "https://image.tmdb.org/t/p/w200/\(posterPath ?? "")")
+        if let posterPath = posterPath {
+            return URL(string: "https://image.tmdb.org/t/p/w200/\(posterPath)")
+        }
+        return nil
     }
     
     var poster780Image: URL? {
-        return URL(string: "https://image.tmdb.org/t/p/w780/\(posterPath ?? "")")
+        if let posterPath = posterPath {
+            return URL(string: "https://image.tmdb.org/t/p/w780/\(posterPath)")
+        }
+        return nil
     }
 }

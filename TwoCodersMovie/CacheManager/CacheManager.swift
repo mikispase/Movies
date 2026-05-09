@@ -10,7 +10,12 @@ class CacheManager {
     static let shared = CacheManager()
        
     func getDocumentsDirectory() -> URL {
-        FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        if let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
+            return url
+        } else {
+            print("Error: Could not find the user's documents directory.")
+            return URL(fileURLWithPath: NSTemporaryDirectory())
+        }
     }
     
     @discardableResult

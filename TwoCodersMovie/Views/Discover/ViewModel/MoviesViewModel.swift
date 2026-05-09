@@ -217,7 +217,12 @@ class MoviesViewModel: MainViewModel {
                 var moviesList: [Movie] = []
                 for item in results {
                     let movie = Movie(json: item)
+                    
+                    if movie.title == nil && movie.posterImage == nil && ( movie.overview == nil || movie.overview == "") {
+                        continue
+                    }
                     moviesList.append(movie)
+
                 }
                 withAnimation {
                     self.searchObjects.append(contentsOf: moviesList)

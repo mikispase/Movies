@@ -10,7 +10,7 @@ import SDWebImageSwiftUI
 
 struct PosterImage: View {
     var url: URL?
-    var placeholder: String  = ""
+    var placeholder: String  = "placeholder"
     var fit: Bool  = false
     var addBlur: Bool  = false
 
