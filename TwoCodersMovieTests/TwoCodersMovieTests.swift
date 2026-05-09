@@ -38,9 +38,9 @@ struct TwoCodersMovieTests {
             Issue.record("Url is nil")
             return
         }
-
+        
         #expect(!url.absoluteString.isEmpty)
-
+        
         guard let isAdult = movie.isAdult else {
             Issue.record("isAdult is True")
             return
@@ -63,7 +63,7 @@ struct TwoCodersMovieTests {
     
     @Test
     func testPaginationLogic() async throws  {
-
+        
         let model = MoviesViewModel(fromMockUp: true)
         model.page = 1
         await model.getMoviews(page: model.page)
@@ -86,7 +86,7 @@ struct TwoCodersMovieTests {
             "vote_count" : 100,
             "poster_path": "/poster.jpg"
         ])
-
+        
         let movie = Movie(json: json)
         #expect(movie.id == 100)
         #expect(movie.voteCount == 100)
@@ -110,7 +110,7 @@ struct TwoCodersMovieTests {
             _ = try await ApiManager.shared.request(
                 name: .details(.movie(movieId: -1))
             )
-
+            
             Issue.record("Expected failure")
         } catch {
             #expect(true)
