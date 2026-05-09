@@ -9,36 +9,46 @@ import SwiftUI
 
 struct MoviewDetailCastView: View {
     let credit:CreditsResponse
+    @Namespace private var namespace
+    @State var mediaFullScreenCast:FullScreenMedia?
     var body: some View {
         VStack(alignment: .leading) {
             Text("Cast")
                 .font(.headline)
             
             ScrollView(.horizontal, showsIndicators: false) {
-                HStack {
+                HStack(alignment: .top) {
                     ForEach(credit.cast, id: \.id) { item in
-                        Button {
-                            
-                        }label: {
-                            VStack {
-                                PosterImage(url: item.posterImage, placeholder: "user")
-                                    .scaledToFill()
-                                    .frame(width: 40, height: 40)
-                                    .clipShape(Circle())
-                                    .overlay(
-                                        Circle().stroke(Color.white, lineWidth: 2)
-                                    )
-                                
-                                Text(item.name)
-                                    .foregroundStyle(.custom)
-                                    .font(.system(size: 13))
+                        if let profilePath = item.profilePath, let url = URL(string: "https://image.tmdb.org/t/p/w780\(profilePath)") {
+                            Button {
+                                mediaFullScreenCast = FullScreenMedia(url: url)
+                            } label: {
+                                VStack {
+                                    PosterImage(url: item.posterImage, placeholder: "user")
+                                        .scaledToFill()
+                                        .frame(width: 40, height: 40)
+                                        .clipShape(Circle())
+                                        .modifier(
+                                            MatchedTransitionSource(id: url.absoluteString,
+                                                                   namespace: namespace)
+                                        )
+                                    
+                                    Text(item.name)
+                                        .foregroundStyle(.custom)
+                                        .font(.system(size: 13))
+                                        .multilineTextAlignment(.center)
+                                        .frame(width: 80)
+                                }
                             }
-                            
                         }
                     }
                 }
             }
         }
         .padding(.top)
+        .fullScreenCover(item: $mediaFullScreenCast, content: { fullScreenMedia in
+            ShowImageFullScreen(url: fullScreenMedia.url.absoluteString)
+                .modifier(AnimationTransition(id: fullScreenMedia.url.absoluteString, namespace: namespace))
+        })
     }
 }

@@ -61,3 +61,27 @@ struct AnimationTransition<ID: Hashable>: ViewModifier {
         }
     }
 }
+
+struct ScrollTargetLayout: ViewModifier {
+    func body(content: Content) -> some View {
+        if #available(iOS 17.0, *) {
+            content
+                .scrollTargetLayout()
+        } else {
+            content
+        }
+    }
+}
+
+struct ScrollPaging: ViewModifier {
+    func body(content: Content) -> some View {
+        if #available(iOS 17.0, *) {
+            content
+                .contentMargins(.horizontal, 16)
+                .scrollBounceBehavior(.always)
+                .scrollTargetBehavior(.viewAligned)
+        } else {
+            content.padding(.horizontal, 16)
+        }
+    }
+}

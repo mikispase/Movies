@@ -49,7 +49,7 @@ struct MovieDetailsView: View {
                                     }
                                     
                                     if let cast = viewModel.credit {
-                                        MoviewDetailCastView(credit: cast)
+                                        MoviewDetailCastView(credit: cast) 
                                     }
                                     
                                     if let url = URL(string: details.homepage ?? "") {
@@ -84,7 +84,7 @@ struct MovieDetailsView: View {
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
                     Task {
-                       await viewModel.checkIsFavorite(setValue: true)
+                        await viewModel.checkIsFavorite(setValue: true)
                     }
                 } label: {
                     Image(systemName: viewModel.isFavorite ?  "heart.fill" : "heart")
@@ -96,6 +96,9 @@ struct MovieDetailsView: View {
             ShowImageFullScreen(url: fullScreenMedia.url.absoluteString)
                 .modifier(AnimationTransition(id: "fullScreenMedia", namespace: namespace))
         })
-        
+        .fullScreenCover(item: $viewModel.mediaFullScreen, content: { fullScreenMedia in
+            ShowImageFullScreen(url: fullScreenMedia.url.absoluteString)
+                .modifier(AnimationTransition(id: "fullScreenMediaCast", namespace: namespace))
+        })        
     }
 }

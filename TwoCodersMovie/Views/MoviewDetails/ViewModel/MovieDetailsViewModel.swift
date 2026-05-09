@@ -15,6 +15,8 @@ class MovieDetailsViewModel: MainViewModel {
     
     @Published var mediaFullScreen: FullScreenMedia?
     
+    @Published var mediaFullScreenCast: FullScreenMedia?
+
     @Published var credit: CreditsResponse?
 
     @Published var isFavorite: Bool = false
