@@ -13,25 +13,39 @@ struct MovieCard: View {
 
     var body: some View {
         VStack(alignment: .leading) {
-            PosterImage(url: movie.posterImage, addBlur: true)
-                .frame(width: 175, height: 160)
-                .overlay(content: {
-                    PosterImage(url: movie.posterImage, fit: true)
-                        .frame(width: 175, height: 160)
-                })
-
-            VStack(alignment: .leading, spacing: 0) {
-                Text(movie.title ?? "")
-                    .foregroundStyle(colorScheme == .light ? .black : .white)
-                    .multilineTextAlignment(.leading)
-                    .font(.system(size: 14, weight: .semibold))
-
-                Text(movie.overview?.truncated(toLength: 100) ?? "")
-                    .foregroundStyle(colorScheme == .light ? .black : .white)
-                    .multilineTextAlignment(.leading)
-                    .font(.system(size: 12))
+            VStack(alignment: .leading) {
+                PosterImage(url: movie.posterImage, addBlur: true)
+                    .frame(width: 175, height: 160)
+                    .overlay(content: {
+                        PosterImage(url: movie.posterImage, fit: true)
+                            .frame(width: 175, height: 160)
+                    })
+                
+                VStack(alignment: .leading, spacing: 0) {
+                    Text(movie.title ?? "")
+                        .foregroundStyle(colorScheme == .light ? .black : .white)
+                        .multilineTextAlignment(.leading)
+                        .font(.system(size: 17, weight: .bold))
+                    
+                    Text(movie.overview?.truncated(toLength: 130) ?? "")
+                        .foregroundStyle(colorScheme == .light ? .black : .white)
+                        .multilineTextAlignment(.leading)
+                        .font(.system(size: 15))
+                }
+                .padding(.horizontal, 8)
+                Spacer()
             }
-            Spacer()
+        }
+        .background {
+            if colorScheme == .dark {
+                Color.gray.opacity(0.2)
+            } else {
+                Color.black.opacity(0.1)
+            }
+        }
+        .overlay(alignment: .topTrailing) {
+            FavoriteHeart(model: movie)
+                .offset(x: -15, y: 15)
         }
     }
 }

@@ -16,7 +16,7 @@ struct TwoCodersMovieApp: App {
 
     init() {
         SDImageCache.shared.config.maxMemoryCount = 1
-        SDImageCache.shared.config.maxDiskSize = 50 * 1024 * 1024 // 50MB disk
+        SDImageCache.shared.config.maxDiskSize = 100 * 1024 * 1024 // 50MB disk
     }
 
     var body: some Scene {

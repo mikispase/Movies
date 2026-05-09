@@ -26,11 +26,7 @@ struct MoviesView: View {
                         } label: {
                             MovieCard(movie: movie)
                         }
-                        .frame(width: 175, height: 270)
-                        .overlay(alignment: .topTrailing) {
-                            FavoriteHeart(model: movie)
-                                .offset(x: -15, y: 15)
-                        }
+                        .frame(width: 175, height: 300)
                     }
 
                     if viewModel.searching {
@@ -50,6 +46,7 @@ struct MoviesView: View {
             }
             .modifier(NavigationModifier())
             .navigationTitle("Discover")
+            .toolbar((router.currentView != "") ? .hidden : .visible, for: .tabBar)
         }
         .searchable(text: $viewModel.searchText, placement: .navigationBarDrawer(displayMode: .automatic))
         .searchScopes($viewModel.searchScope, activation: .onSearchPresentation) {

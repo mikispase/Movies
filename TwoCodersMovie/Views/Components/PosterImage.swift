@@ -27,6 +27,9 @@ struct PosterImage: View {
                     }
                     .frame(width: geometry.size.width, height: geometry.size.height)
                     .clipped()
+                    .background(
+                        Color.gray.opacity(0.1)
+                    )
             } placeholder: {
                 if placeholder == "" {
                     RoundedRectangle(cornerRadius: 0, style: .continuous)

@@ -11,7 +11,7 @@ struct MovieDetailsReleaseDateView: View {
     let releaseDate: String
 
     var body: some View {
-        Text("Release Date:")
+        Text("Release Date")
             .font(.headline)
             .padding(.top, 16)
         Text(releaseDate)

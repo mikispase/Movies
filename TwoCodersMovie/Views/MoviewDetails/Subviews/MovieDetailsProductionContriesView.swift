@@ -18,7 +18,7 @@ struct MovieDetailsProductionContriesView: View {
             }
             HStack {
                 ForEach(countries, id: \.iso) { country in
-                    HStack {
+                    HStack(spacing: 0) {
                         Text(country.flagEmoji(for: country.iso ?? ""))
                         Text(country.name ?? "")
                             .font(.system(size: 15))

@@ -23,42 +23,44 @@ struct MovieDetailsView: View {
                         description:  Text(error.localizedDescription)
                     )
                 } else {
-                    if viewModel.isLoading {
-                        ProgressView()
-                    } else {
-                        if let details = viewModel.moviewDetails {
-                            ScrollView {
-                                MovieDetailsHeaderView(model: viewModel.movie, geo: geo, nameSpace: namespace) { mediaFullScreen in
-                                    viewModel.mediaFullScreen = mediaFullScreen
-                                }
-                                VStack(alignment: .leading, spacing: 0) {
-                                    if let overview =  viewModel.movie.overview, !overview.isEmpty {
-                                        MovieDetailsOverviewView(overView: overview)
-                                    }
-                                    
-                                    if let releaseDate =  viewModel.movie.releaseDate {
-                                        MovieDetailsReleaseDateView(releaseDate: releaseDate)
-                                    }
-                                    
-                                    if let voteCount = details.voteCount, let voteAverage = details.voteAverage {
-                                        MoviewDetailRatingView(voteAvetage: voteAverage, voteCount: voteCount)
-                                    }
-                                    
-                                    if let countries = viewModel.moviewDetails?.productionCountries {
-                                        MovieDetailsProductionContriesView(countries: countries)
-                                    }
-                                    
-                                    if let cast = viewModel.credit {
-                                        MoviewDetailCastView(credit: cast) 
-                                    }
-                                    
-                                    if let url = URL(string: details.homepage ?? "") {
-                                        MoviesDetailsExternalPageView(url: url, model: details, routerType: viewModel.routerType)
-                                    }
-                                }
-                                .padding(.leading)
+                    ScrollView {
+                        MovieDetailsHeaderView(model: viewModel.movie, geo: geo, nameSpace: namespace) { mediaFullScreen in
+                            viewModel.mediaFullScreen = mediaFullScreen
+                        }
+                        .ignoresSafeArea(.all)
+                        
+                        VStack(alignment: .leading, spacing: 0) {
+                            if let overview =  viewModel.movie.overview, !overview.isEmpty {
+                                MovieDetailsOverviewView(overView: overview)
+                            }
+                            
+                            if let genre = viewModel.moviewDetails?.genres {
+                                MoviewDetailsGenreView(gentres: genre)
+                            }
+                            
+                            if let releaseDate =  viewModel.movie.releaseDate {
+                                MovieDetailsReleaseDateView(releaseDate: releaseDate)
+                            }
+                            
+                            if let voteCount = viewModel.moviewDetails?.voteCount, let voteAverage = viewModel.moviewDetails?.voteAverage {
+                                MoviewDetailRatingView(voteAvetage: voteAverage, voteCount: voteCount)
+                            }
+                            
+                            if let countries = viewModel.moviewDetails?.productionCountries {
+                                MovieDetailsProductionContriesView(countries: countries)
+                            }
+                            
+                            if let credit = viewModel.credit {
+                                MoviewDetailCastView(credit: credit)
+                            }
+                            
+                            if let url = URL(string: viewModel.moviewDetails?.homepage ?? ""), let details = viewModel.moviewDetails {
+                                MoviesDetailsExternalPageView(url: url, model: details, routerType: viewModel.routerType)
                             }
                         }
+                        .padding(.leading)
+                        .redacted(reason: viewModel.isLoading  ? .placeholder  : [])
+                        
                     }
                 }
             }
@@ -91,7 +93,7 @@ struct MovieDetailsView: View {
                 }
             }
         }
-        .navigationTitle(viewModel.moviewDetails?.originalTitle ?? "")
+        .navigationTitle(viewModel.moviewDetails?.originalTitle ?? viewModel.movie.title ?? viewModel.movie.originalTitle ?? "")
         .fullScreenCover(item: $viewModel.mediaFullScreen, content: { fullScreenMedia in
             ShowImageFullScreen(url: fullScreenMedia.url.absoluteString)
                 .modifier(AnimationTransition(id: "fullScreenMedia", namespace: namespace))
@@ -99,6 +101,25 @@ struct MovieDetailsView: View {
         .fullScreenCover(item: $viewModel.mediaFullScreen, content: { fullScreenMedia in
             ShowImageFullScreen(url: fullScreenMedia.url.absoluteString)
                 .modifier(AnimationTransition(id: "fullScreenMediaCast", namespace: namespace))
-        })        
+        })
+    }
+}
+
+struct MoviewDetailsGenreView: View {
+    let gentres:[Genre]
+    var body: some View {
+        
+        VStack(alignment: .leading) {
+            Text("Genre")
+                .font(.headline)
+            
+            FlowHStack {
+                ForEach(gentres, id:\.id) { genre in
+                    Text(genre.name ?? "")
+                        .font(.system(size: 15))
+                }
+            }
+        }
+        .padding(.top)
     }
 }

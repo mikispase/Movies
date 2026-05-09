@@ -66,6 +66,7 @@ class MoviesViewModel: MainViewModel {
             self.phaseFetch = .success(self.movies)
 
             SDImagePreloader.shared.preload(urls: moviesList.compactMap({ $0.posterImage }))
+            SDImagePreloader.shared.preload(urls: moviesList.compactMap({ $0.poster780Image }))
 
             if initialLoad {
                 initialLoad = false
@@ -207,6 +208,7 @@ class MoviesViewModel: MainViewModel {
                 self.phaseFetch = .success(self.searchObjects)
 
                 SDImagePreloader.shared.preload(urls: moviesList.compactMap({ $0.posterImage }))
+                SDImagePreloader.shared.preload(urls: moviesList.compactMap({ $0.poster780Image }))
 
                 if pageSearch >= totalPagesSearch {
                     shoudLoadMoreSearch = false

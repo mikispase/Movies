@@ -11,11 +11,12 @@ struct MovieDetailsOverviewView: View {
     let overView: String
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        VStack(alignment: .leading, spacing: 0) {
             Text("Overview")
                 .font(.headline)
             Text(overView)
                 .font(.system(size: 15))
+                .padding(.trailing, 8)
         }
         .padding(.top, 16)
     }

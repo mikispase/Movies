@@ -26,7 +26,7 @@ struct MoviewDetailCastView: View {
                                 VStack {
                                     PosterImage(url: item.posterImage, placeholder: "user")
                                         .scaledToFill()
-                                        .frame(width: 40, height: 40)
+                                        .frame(width: 80, height: 80)
                                         .clipShape(Circle())
                                         .modifier(
                                             MatchedTransitionSource(id: url.absoluteString,
