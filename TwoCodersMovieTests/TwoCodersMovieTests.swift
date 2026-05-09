@@ -10,7 +10,7 @@ import SwiftyJSON
 import UIKit
 @testable import TwoCodersMovie
 
-// Note firt time I write Test!!!!!!
+ //Note firt time I write Test!!!!!!
 struct TwoCodersMovieTests {
     @Test
     func testDiscover() async throws {
@@ -63,7 +63,6 @@ struct TwoCodersMovieTests {
     
     @Test
     func testPaginationLogic() async throws  {
-        
         let model = MoviesViewModel(fromMockUp: true)
         model.page = 1
         await model.getMoviews(page: model.page)
@@ -126,14 +125,12 @@ struct TwoCodersMovieTests {
         #expect(model.movies.count == 60)
     }
     
-    
     @Test
     func testEmptyState() {
         let model = MoviesViewModel(fromMockUp: true)
         model.movies = []
         #expect(model.movies.isEmpty)
     }
-    
     
     @Test
     func testCodableDecodableSuccess() async {

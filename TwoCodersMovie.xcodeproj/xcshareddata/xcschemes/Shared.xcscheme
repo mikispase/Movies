@@ -15,9 +15,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "24D455792FAB6447008141CA"
-               BuildableName = "TwoCodersMovie.app"
-               BlueprintName = "TwoCodersMovie"
+               BlueprintIdentifier = "248938412FAF4241006D49E0"
+               BuildableName = "libShared.a"
+               BlueprintName = "Shared"
                ReferencedContainer = "container:TwoCodersMovie.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -27,26 +27,8 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES">
-      <TestPlans>
-         <TestPlanReference
-            reference = "container:Shared/TestPlanShared.xctestplan"
-            default = "YES">
-         </TestPlanReference>
-      </TestPlans>
-      <Testables>
-         <TestableReference
-            skipped = "NO"
-            parallelizable = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "24B684F92FAC2693002FF66C"
-               BuildableName = "TwoCodersMovieTests.xctest"
-               BlueprintName = "TwoCodersMovieTests"
-               ReferencedContainer = "container:TwoCodersMovie.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-      </Testables>
+      shouldUseLaunchSchemeArgsEnv = "YES"
+      shouldAutocreateTestPlan = "YES">
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"
@@ -59,16 +41,6 @@
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES"
       queueDebuggingEnableBacktraceRecording = "Yes">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "24D455792FAB6447008141CA"
-            BuildableName = "TwoCodersMovie.app"
-            BlueprintName = "TwoCodersMovie"
-            ReferencedContainer = "container:TwoCodersMovie.xcodeproj">
-         </BuildableReference>
-      </BuildableProductRunnable>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -76,16 +48,15 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "24D455792FAB6447008141CA"
-            BuildableName = "TwoCodersMovie.app"
-            BlueprintName = "TwoCodersMovie"
+            BlueprintIdentifier = "248938412FAF4241006D49E0"
+            BuildableName = "libShared.a"
+            BlueprintName = "Shared"
             ReferencedContainer = "container:TwoCodersMovie.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

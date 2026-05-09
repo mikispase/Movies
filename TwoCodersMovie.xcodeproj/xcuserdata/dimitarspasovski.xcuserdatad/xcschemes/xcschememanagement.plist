@@ -19,6 +19,11 @@
 			<key>orderHint</key>
 			<integer>3</integer>
 		</dict>
+		<key>Shared.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>4</integer>
+		</dict>
 		<key>TwoCodersMovie.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
@@ -37,11 +42,16 @@
 		<key>TwoCodersMovieTests.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>6</integer>
+			<integer>3</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>248938412FAF4241006D49E0</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>24B684F92FAC2693002FF66C</key>
 		<dict>
 			<key>primary</key>

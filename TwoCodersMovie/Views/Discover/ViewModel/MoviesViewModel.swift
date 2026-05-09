@@ -165,7 +165,7 @@ class MoviesViewModel: MainViewModel {
         
     }
     
-    private func search(query: String, needRefreshData:Bool = false) {
+     func search(query: String, needRefreshData:Bool = false) {
         if query.isEmpty {
             searching = false
             return

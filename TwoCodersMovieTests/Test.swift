@@ -238,13 +238,10 @@ final class Test: XCTestCase {
     
     func testLoadMoreDoesNothingWhenDisabled() {
         let model = MoviesViewModel(fromMockUp: true)
-        
         model.page = 0
         model.totalPages = 0
         model.shoudLoadMore = false
-        
         model.loadMore()
-        
         XCTAssertEqual(model.page, 1)
     }
     
@@ -267,5 +264,157 @@ final class Test: XCTestCase {
         
         XCTAssertTrue(model.movies.isEmpty)
         XCTAssertEqual(model.page, 1)
+    }
+    
+    func testDetailsInvalidJson() {
+        func testMovieDecodeFailure() {
+            let invalidJSON = """
+                {
+                    "id": "wrong_type"
+                }
+                """.data(using: .utf8)!
+            
+            let decoder = JSONDecoder()
+            
+            XCTAssertThrowsError(
+                try decoder.decode(DetailsObject.self, from: invalidJSON)
+            )
+        }
+    }
+    
+    func testPosterDetailsImageURL() {
+        let json = JSON([
+            "poster_path": "/abc.jpg"
+        ])
+        
+        let movie = DetailsObject(json: json)
+        
+        XCTAssertNotNil(movie.posterImage)
+        XCTAssertTrue(
+            movie.posterImage?.absoluteString.contains("abc.jpg") == true
+        )
+    }
+    
+    func testParsingDetailsObject() async{
+        do {
+            
+            let params: [String: Any] = [
+                "page": 1
+            ]
+            
+            let json = try await ApiManager.shared.request(
+                name: .discover,
+                params: params,
+                method: .get
+            )
+            
+            let results = json["results"].arrayValue
+            
+            let movie =   Movie(json: results.first!)
+            
+            let params1 = ["language": "en-US"]
+            let reguest = RequestEmitNameEnum.details(.movie(movieId: movie.id))
+            
+            let json1 = try await ApiManager.shared.request(name: reguest, params: params1, method: .get)
+            let details = DetailsObject(json: json1)
+            
+            XCTAssertNotNil(details.id)
+            XCTAssertNotNil(details.posterImage)
+            
+            let decoder = JSONDecoder()
+            let details1 = try decoder.decode(DetailsObject.self, from:  JSON(json1).rawData())
+            
+            XCTAssertNotNil(details1)
+            
+            do {
+                let encoder = JSONEncoder()
+                let data = try encoder.encode(details1)
+                let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+
+                // 3. Assert
+                XCTAssertNotNil(jsonObject)
+            } catch {
+                XCTFail("Encoding or serialization failed: \(error)")
+            }
+        } catch {
+            debugPrint(error)
+        }
+    }
+        
+    func testGHttpMethos() {
+        let httpMethodPOST = HttpMethod.post
+        
+        XCTAssertEqual(httpMethodPOST.string, "POST")
+
+        let httpMethodGET = HttpMethod.get
+        
+        XCTAssertEqual(httpMethodGET.string, "GET")
+    }
+
+    func testReadFromDB() async {
+        do {
+            let objects = await SwiftDataManager.shared.getAllMovies()
+            
+            XCTAssertNotNil(objects)
+            
+            if objects.count > 0 {
+                let first = objects.first!
+                let getObjectById = await SwiftDataManager.shared.getMovieById(id: first.id )
+                XCTAssertNotNil(getObjectById)
+                
+                let getObejctByCustomId = await SwiftDataManager.shared.getMovieById(custumId: first.customId!)
+                XCTAssertNotNil(getObejctByCustomId)
+                
+                //case set favorite
+                getObejctByCustomId?.myFavorite = true
+                await SwiftDataManager.shared.saveFavorite(movie: getObejctByCustomId!)
+                let getObejctByCustomId1 = await SwiftDataManager.shared.getMovieById(custumId: first.customId!)
+                XCTAssertEqual(getObejctByCustomId1?.myFavorite, true)
+                
+                // case not found
+                let notFoind = await SwiftDataManager.shared.getMovieById(id: -1111)
+                XCTAssertNil(notFoind)
+                
+                do {
+                    let encoder = JSONEncoder()
+                    let data = try encoder.encode(getObejctByCustomId!)
+                    let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+
+                    // 3. Assert
+                    XCTAssertNotNil(jsonObject)
+                } catch {
+                    XCTFail("Encoding or serialization failed: \(error)")
+                }
+            }
+        }
+    }
+    
+    func testEvn() {
+        let apiUrl = Bundle.main.object(forInfoDictionaryKey: "API_BASE_URL") as? String ?? ""
+        let apiKey = Bundle.main.object(forInfoDictionaryKey: "API_KEY") as? String ?? ""
+        let env = Bundle.main.object(forInfoDictionaryKey: "APP_ENV") as? String ?? ""
+        XCTAssertNotNil(apiUrl)
+        XCTAssertNotNil(apiKey)
+        XCTAssertNotNil(env)
+    }
+    
+    func testTrancatedString() {
+        let longTest = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+        
+        let trancated = longTest.truncated(toLength: 20,trailing: nil)
+        XCTAssertEqual(trancated.count, 20)
+    }
+    
+    
+    func testSearch() async {
+        do {
+            let model = MoviesViewModel(fromMockUp: false)
+            model.searchText = "Ted"
+            model.search(query: model.searchText, needRefreshData: false)
+            try await Task.sleep(for: .seconds(2))
+            XCTAssertEqual(model.searchObjects.count, 20)
+        }catch {
+            XCTFail("not working search \(error)")
+        }
     }
 }

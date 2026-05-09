@@ -25,16 +25,57 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		248938402FAF4241006D49E0 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		248938422FAF4241006D49E0 /* libShared.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libShared.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		24B684812FABFA9F002FF66C /* Dev.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Dev.xcconfig; sourceTree = "<group>"; };
 		24B684832FABFAB6002FF66C /* Prod.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Prod.xcconfig; sourceTree = "<group>"; };
 		24B684EC2FAC153A002FF66C /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		24B684FA2FAC2693002FF66C /* TwoCodersMovieTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TwoCodersMovieTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		24BDB9052FAC84E400A1A9EB /* TwoCodersMovieTests.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = TwoCodersMovieTests.xctestplan; sourceTree = "<group>"; };
 		24D4557A2FAB6447008141CA /* TwoCodersMovie.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TwoCodersMovie.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		2489384F2FAF425E006D49E0 /* Exceptions for "Shared" folder in "TwoCodersMovie" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				ApiManager/ApiEnums/CustomError.swift,
+				ApiManager/ApiEnums/HttpMethod.swift,
+				ApiManager/ApiEnums/RequestEmitNameEnum.swift,
+				ApiManager/ApiManager.swift,
+				ApiManager/Constants.swift,
+				Models/DetailsObject.swift,
+				Models/FullScreenMedia.swift,
+				Models/Movie.swift,
+				Models/Web.swift,
+				SwiftData/SwiftDataManager.swift,
+			);
+			target = 24D455792FAB6447008141CA /* TwoCodersMovie */;
+		};
+		248938502FAF425E006D49E0 /* Exceptions for "Shared" folder in "TwoCodersMovieTests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				ApiManager/ApiEnums/CustomError.swift,
+				ApiManager/ApiEnums/HttpMethod.swift,
+				ApiManager/ApiEnums/RequestEmitNameEnum.swift,
+				ApiManager/ApiManager.swift,
+				Models/DetailsObject.swift,
+				Models/Movie.swift,
+				SwiftData/SwiftDataManager.swift,
+			);
+			target = 24B684F92FAC2693002FF66C /* TwoCodersMovieTests */;
+		};
 		24B684862FABFBB1002FF66C /* Exceptions for "TwoCodersMovie" folder in "TwoCodersMovie" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
@@ -45,14 +86,8 @@
 		24B685062FAC26EA002FF66C /* Exceptions for "TwoCodersMovie" folder in "TwoCodersMovieTests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				ApiManager/ApiEnums/CustomError.swift,
-				ApiManager/ApiEnums/HttpMethod.swift,
-				ApiManager/ApiEnums/RequestEmitNameEnum.swift,
-				ApiManager/ApiManager.swift,
 				"Extensions/String+Extensions.swift",
-				Models/Movie.swift,
 				SDWebImage/SDImagePreloader.swift,
-				SwiftData/SwiftDataManager.swift,
 				Views/Discover/ViewModel/MoviesViewModel.swift,
 				Views/MainViewModel/MainViewModel.swift,
 				Views/ViewEnum/ViewEnums.swift,
@@ -62,6 +97,15 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		248938432FAF4241006D49E0 /* Shared */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				2489384F2FAF425E006D49E0 /* Exceptions for "Shared" folder in "TwoCodersMovie" target */,
+				248938502FAF425E006D49E0 /* Exceptions for "Shared" folder in "TwoCodersMovieTests" target */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
 		24B684FB2FAC2693002FF66C /* TwoCodersMovieTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = TwoCodersMovieTests;
@@ -79,6 +123,13 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		2489383F2FAF4241006D49E0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		24B684F72FAC2693002FF66C /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -109,12 +160,12 @@
 		24D455712FAB6447008141CA = {
 			isa = PBXGroup;
 			children = (
-				24BDB9052FAC84E400A1A9EB /* TwoCodersMovieTests.xctestplan */,
 				24B684EC2FAC153A002FF66C /* Config.xcconfig */,
 				24B684832FABFAB6002FF66C /* Prod.xcconfig */,
 				24B684812FABFA9F002FF66C /* Dev.xcconfig */,
 				24D4557C2FAB6447008141CA /* TwoCodersMovie */,
 				24B684FB2FAC2693002FF66C /* TwoCodersMovieTests */,
+				248938432FAF4241006D49E0 /* Shared */,
 				24B685092FAC274B002FF66C /* Frameworks */,
 				24D4557B2FAB6447008141CA /* Products */,
 			);
@@ -125,6 +176,7 @@
 			children = (
 				24D4557A2FAB6447008141CA /* TwoCodersMovie.app */,
 				24B684FA2FAC2693002FF66C /* TwoCodersMovieTests.xctest */,
+				248938422FAF4241006D49E0 /* libShared.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -132,6 +184,28 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		248938412FAF4241006D49E0 /* Shared */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2489384A2FAF4241006D49E0 /* Build configuration list for PBXNativeTarget "Shared" */;
+			buildPhases = (
+				2489383E2FAF4241006D49E0 /* Sources */,
+				2489383F2FAF4241006D49E0 /* Frameworks */,
+				248938402FAF4241006D49E0 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				248938432FAF4241006D49E0 /* Shared */,
+			);
+			name = Shared;
+			packageProductDependencies = (
+			);
+			productName = Shared;
+			productReference = 248938422FAF4241006D49E0 /* libShared.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 		24B684F92FAC2693002FF66C /* TwoCodersMovieTests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 24B685002FAC2693002FF66C /* Build configuration list for PBXNativeTarget "TwoCodersMovieTests" */;
@@ -191,6 +265,9 @@
 				LastSwiftUpdateCheck = 2640;
 				LastUpgradeCheck = 2640;
 				TargetAttributes = {
+					248938412FAF4241006D49E0 = {
+						CreatedOnToolsVersion = 26.4.1;
+					};
 					24B684F92FAC2693002FF66C = {
 						CreatedOnToolsVersion = 26.4.1;
 						TestTargetID = 24D455792FAB6447008141CA;
@@ -221,6 +298,7 @@
 			targets = (
 				24D455792FAB6447008141CA /* TwoCodersMovie */,
 				24B684F92FAC2693002FF66C /* TwoCodersMovieTests */,
+				248938412FAF4241006D49E0 /* Shared */,
 			);
 		};
 /* End PBXProject section */
@@ -246,6 +324,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		2489383E2FAF4241006D49E0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		24B684F62FAC2693002FF66C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -275,6 +360,73 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		248938462FAF4241006D49E0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.4;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		248938472FAF4241006D49E0 /* Dev */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.4;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Dev;
+		};
+		248938482FAF4241006D49E0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.4;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		248938492FAF4241006D49E0 /* Prod */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.4;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Prod;
+		};
 		24B6847B2FABF8CB002FF66C /* Dev */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -777,6 +929,17 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		2489384A2FAF4241006D49E0 /* Build configuration list for PBXNativeTarget "Shared" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				248938462FAF4241006D49E0 /* Debug */,
+				248938472FAF4241006D49E0 /* Dev */,
+				248938482FAF4241006D49E0 /* Release */,
+				248938492FAF4241006D49E0 /* Prod */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		24B685002FAC2693002FF66C /* Build configuration list for PBXNativeTarget "TwoCodersMovieTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

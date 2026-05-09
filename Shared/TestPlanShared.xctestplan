@@ -1,0 +1,25 @@
+{
+  "configurations" : [
+    {
+      "id" : "286BB20C-08C4-44F1-85FC-A48DA194687A",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "testTimeoutsEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:TwoCodersMovie.xcodeproj",
+        "identifier" : "24B684F92FAC2693002FF66C",
+        "name" : "TwoCodersMovieTests"
+      }
+    }
+  ],
+  "version" : 1
+}
