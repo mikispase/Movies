@@ -14,14 +14,16 @@ struct MovieDetailsHeaderView: View {
     var action: ((FullScreenMedia) -> Void)?
     
     var body: some View {
+        let isLandscape = geo.size.width > geo.size.height
+        let divider = UIDevice.isIpad ? isLandscape ? 1.5 : 2 : isLandscape ? 1.2 : 2
         VStack(alignment: .leading) {
             if let url = model.posterImage {
                 VStack {
                     PosterImage(url: url, addBlur: true)
-                        .frame(height: geo.size.height / 2)
+                        .frame(height: geo.size.height / CGFloat(divider) )
                         .overlay(content: {
                             PosterImage(url: url, fit: true)
-                                .frame(height: geo.size.height / 2)
+                                .frame(height: geo.size.height / CGFloat(divider) )
                                 .modifier(
                                     MatchedTransitionSource(id: "fullScreenMedia",
                                                             namespace: nameSpace)
