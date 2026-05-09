@@ -12,9 +12,16 @@ enum SearcTypeEnum {
     case movie
     case series
 }
+
+enum CreditEnum {
+    case movie(id:Int)
+    case series(id:Int)
+}
+
 enum DetailsTypeEnum {
     case movie(movieId:Int)
     case series(series:Int)
+    case credit(CreditEnum)
 }
 
 enum RequestEmitNameEnum {
@@ -32,6 +39,13 @@ enum RequestEmitNameEnum {
                 return "movie/\(movieId)"
             case .series(let seriesId):
                 return "tv/\(seriesId)"
+            case .credit(let type):
+                switch type {
+                case .movie(let id):
+                    return "movie/\(id)/credits"
+                case .series(let id):
+                    return "tv/\(id)/credits"
+                }
             }
         case .searchMovie(let type):
             switch type {

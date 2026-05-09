@@ -12,7 +12,10 @@ struct MovieDetailsReleaseDateView: View {
 
     var body: some View {
         Text("Release Date:")
+            .font(.headline)
             .padding(.top, 16)
         Text(releaseDate)
+            .font(.system(size: 15))
+
     }
 }

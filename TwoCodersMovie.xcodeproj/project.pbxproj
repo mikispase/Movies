@@ -7,9 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		24B684822FABFA9F002FF66C /* Dev.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 24B684812FABFA9F002FF66C /* Dev.xcconfig */; };
-		24B684842FABFAB6002FF66C /* Prod.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 24B684832FABFAB6002FF66C /* Prod.xcconfig */; };
-		24B684ED2FAC153A002FF66C /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 24B684EC2FAC153A002FF66C /* Config.xcconfig */; };
 		24B6850B2FAC274B002FF66C /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 24B6850A2FAC274B002FF66C /* SwiftyJSON */; };
 		24D455942FAB6A6C008141CA /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 24D455932FAB6A6C008141CA /* SDWebImageSwiftUI */; };
 		24D455972FAB6AA1008141CA /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 24D455962FAB6AA1008141CA /* SwiftyJSON */; };
@@ -55,6 +52,7 @@
 				ApiManager/ApiEnums/RequestEmitNameEnum.swift,
 				ApiManager/ApiManager.swift,
 				ApiManager/Constants.swift,
+				Models/Credit.swift,
 				Models/DetailsObject.swift,
 				Models/FullScreenMedia.swift,
 				Models/Movie.swift,
@@ -70,6 +68,7 @@
 				ApiManager/ApiEnums/HttpMethod.swift,
 				ApiManager/ApiEnums/RequestEmitNameEnum.swift,
 				ApiManager/ApiManager.swift,
+				Models/Credit.swift,
 				Models/DetailsObject.swift,
 				Models/Movie.swift,
 				SwiftData/SwiftDataManager.swift,
@@ -160,9 +159,6 @@
 		24D455712FAB6447008141CA = {
 			isa = PBXGroup;
 			children = (
-				24B684EC2FAC153A002FF66C /* Config.xcconfig */,
-				24B684832FABFAB6002FF66C /* Prod.xcconfig */,
-				24B684812FABFA9F002FF66C /* Dev.xcconfig */,
 				24D4557C2FAB6447008141CA /* TwoCodersMovie */,
 				24B684FB2FAC2693002FF66C /* TwoCodersMovieTests */,
 				248938432FAF4241006D49E0 /* Shared */,
@@ -315,9 +311,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				24B684ED2FAC153A002FF66C /* Config.xcconfig in Resources */,
-				24B684822FABFA9F002FF66C /* Dev.xcconfig in Resources */,
-				24B684842FABFAB6002FF66C /* Prod.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

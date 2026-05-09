@@ -26,26 +26,34 @@ struct MovieDetailsView: View {
                     if viewModel.isLoading {
                         ProgressView()
                     } else {
-                        if let model = viewModel.moviewDetails {
+                        if let details = viewModel.moviewDetails {
                             ScrollView {
-                                MovieDetailsHeaderView(model: model, geo: geo, nameSpace: namespace) { mediaFullScreen in
+                                MovieDetailsHeaderView(model: viewModel.movie, geo: geo, nameSpace: namespace) { mediaFullScreen in
                                     viewModel.mediaFullScreen = mediaFullScreen
                                 }
                                 VStack(alignment: .leading, spacing: 0) {
-                                    if let overview = model.overview {
+                                    if let overview =  viewModel.movie.overview, !overview.isEmpty {
                                         MovieDetailsOverviewView(overView: overview)
                                     }
                                     
-                                    if let releaseDate = model.releaseDate {
+                                    if let releaseDate =  viewModel.movie.releaseDate {
                                         MovieDetailsReleaseDateView(releaseDate: releaseDate)
+                                    }
+                                    
+                                    if let voteCount = details.voteCount, let voteAverage = details.voteAverage {
+                                        MoviewDetailRatingView(voteAvetage: voteAverage, voteCount: voteCount)
                                     }
                                     
                                     if let countries = viewModel.moviewDetails?.productionCountries {
                                         MovieDetailsProductionContriesView(countries: countries)
                                     }
                                     
-                                    if let url = URL(string: model.homepage ?? "") {
-                                        MoviesDetailsExternalPageView(url: url, model: model, routerType: viewModel.routerType)
+                                    if let cast = viewModel.credit {
+                                        MoviewDetailCastView(credit: cast)
+                                    }
+                                    
+                                    if let url = URL(string: details.homepage ?? "") {
+                                        MoviesDetailsExternalPageView(url: url, model: details, routerType: viewModel.routerType)
                                     }
                                 }
                                 .padding(.leading)

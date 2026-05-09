@@ -14,13 +14,14 @@ struct MovieDetailsProductionContriesView: View {
         VStack(alignment: .leading, spacing: 0) {
             if countries.count > 0 {
                 Text("Production Contries")
+                    .font(.headline)
             }
             HStack {
                 ForEach(countries, id: \.iso) { country in
                     HStack {
                         Text(country.flagEmoji(for: country.iso ?? ""))
                         Text(country.name ?? "")
-                            .font(.caption)
+                            .font(.system(size: 15))
                             .padding(.leading, 3)
                     }
                 }

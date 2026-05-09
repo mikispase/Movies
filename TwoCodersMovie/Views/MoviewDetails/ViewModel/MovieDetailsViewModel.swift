@@ -15,6 +15,8 @@ class MovieDetailsViewModel: MainViewModel {
     
     @Published var mediaFullScreen: FullScreenMedia?
     
+    @Published var credit: CreditsResponse?
+
     @Published var isFavorite: Bool = false
     
     let routerType:RouterType
@@ -49,11 +51,18 @@ class MovieDetailsViewModel: MainViewModel {
     func getDetails() async {
         do {
             let params = ["language": "en-US"]
-            let reguest = fromSeries ? RequestEmitNameEnum.details(.series(series: movie.id)) : RequestEmitNameEnum.details(.movie(movieId: movie.id))
+            let request = movie.hasVideo ?? true ? RequestEmitNameEnum.details(.series(series: movie.id)) : RequestEmitNameEnum.details(.movie(movieId: movie.id))
             
-            let json = try await api.request(name: reguest, params: params, method: .get)
+            let json = try await api.request(name: request, params: params, method: .get)
             debugPrint(json)
             moviewDetails = DetailsObject(json: json)
+            
+            let requestCredit = movie.hasVideo ?? true ? RequestEmitNameEnum.details(.credit(.series(id: movie.id))) : RequestEmitNameEnum.details(.credit(.movie(id: movie.id)))
+            let creditJson = try await api.request(name: requestCredit, params: params, method: .get)
+            
+            let creditResponce = CreditsResponse(json: creditJson)
+            self.credit = creditResponce
+            
             if let obj = moviewDetails {
                 phaseFetch = .success(obj)
             }
