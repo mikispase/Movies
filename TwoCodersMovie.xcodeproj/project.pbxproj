@@ -85,6 +85,7 @@
 		24B685062FAC26EA002FF66C /* Exceptions for "TwoCodersMovie" folder in "TwoCodersMovieTests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				CacheManager/CacheManager.swift,
 				"Extensions/String+Extensions.swift",
 				SDWebImage/SDImagePreloader.swift,
 				Views/Discover/ViewModel/MoviesViewModel.swift,

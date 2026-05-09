@@ -29,10 +29,21 @@ class MoviesViewModel: MainViewModel {
     @Published var searchScope = SearchScope.movies
     @Published var searching: Bool = false
 
+    var haveCache: Bool = false
+    
     init(fromMockUp:Bool = false) {
         super.init(ObjectIdentifier(Self.Type.self))
 
         if !fromMockUp {
+            
+            haveCache = false
+            if initialLoad {
+                if let cached = CacheManager.shared.get([Movie].self, forKey: "Movie") {
+                    haveCache = true
+                    self.movies = cached
+                }
+            }
+            
             Task {
                 await getMoviews(page: page)
             }
@@ -50,7 +61,7 @@ class MoviesViewModel: MainViewModel {
                 "sort_by": "popularity.desc",
                 "page": page
             ]
-            
+        
             let json =  try await api.request(name: .discover, params: params, method: .get)
             if totalPages == 0 {
                 totalPages = json["total_pages"].intValue
@@ -62,6 +73,12 @@ class MoviesViewModel: MainViewModel {
                 let movie = Movie(json: item)
                 moviesList.append(movie)
             }
+            
+            if haveCache && initialLoad {
+                haveCache = false
+                self.movies = []
+            }
+            
             self.movies.append(contentsOf: moviesList)
             self.phaseFetch = .success(self.movies)
 
@@ -70,6 +87,7 @@ class MoviesViewModel: MainViewModel {
 
             if initialLoad {
                 initialLoad = false
+                CacheManager.shared.set(moviesList, forKey: "Movie")
             }
 
             if page >= totalPages {
@@ -77,7 +95,7 @@ class MoviesViewModel: MainViewModel {
             }
             
             checkShoudLoadMore()
-           
+            
             await SwiftDataManager.shared.saveMovies(movies)
             
         } catch {
