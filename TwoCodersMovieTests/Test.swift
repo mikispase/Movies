@@ -321,6 +321,12 @@ final class Test: XCTestCase {
             XCTAssertNotNil(details.id)
             XCTAssertNotNil(details.posterImage)
             
+            let creditJson =  try await ApiManager.shared.request(name: .details(.credit(.movie(id: movie.id))),params: params1)
+            let credit = CreditsResponse(json: creditJson)
+            XCTAssertNotNil(credit.id)
+            XCTAssertNotNil(credit.cast.first?.id)
+            XCTAssertNotNil(credit.crew.first?.id)
+            
             let decoder = JSONDecoder()
             let details1 = try decoder.decode(DetailsObject.self, from:  JSON(json1).rawData())
             
@@ -417,4 +423,5 @@ final class Test: XCTestCase {
             XCTFail("not working search \(error)")
         }
     }
+
 }
