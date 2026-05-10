@@ -212,7 +212,7 @@ struct SearchView:View {
             }
             .modifier(NavigationModifier())
             .navigationTitle("Search")
-            .toolbar((searchRouter.currentView != "") ? .hidden : .visible, for: .tabBar)
+            //.toolbar((searchRouter.currentView != "") ? .hidden : .visible, for: .tabBar)
         }
         .searchable(text: $viewModel.searchText, placement: .navigationBarDrawer(displayMode: .automatic))
         .searchScopes($viewModel.searchScope, activation: .onSearchPresentation) {

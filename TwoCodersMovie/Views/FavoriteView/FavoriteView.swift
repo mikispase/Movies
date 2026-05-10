@@ -46,7 +46,7 @@ struct FavoriteView:View {
             }
             .modifier(NavigationModifier())
             .navigationTitle("Favorite")
-            .toolbar((favoriteRouter.currentView != "") ? .hidden : .visible, for: .tabBar)
+           // .toolbar((favoriteRouter.currentView != "") ? .hidden : .visible, for: .tabBar)
         }
     }
 }
