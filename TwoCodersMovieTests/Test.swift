@@ -312,7 +312,7 @@ final class Test: XCTestCase {
 
             // detaisl encode / decode
             let decoder = JSONDecoder()
-            let details1 = try decoder.decode(DetailsObject.self, from:  JSON(json1).rawData())
+            let details1 = try decoder.decode(DetailsObject.self, from: JSON(json1).rawData())
             XCTAssertNotNil(details1)
             do {
                 let encoder = JSONEncoder()

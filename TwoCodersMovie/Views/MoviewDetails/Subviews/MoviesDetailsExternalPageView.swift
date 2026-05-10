@@ -41,6 +41,6 @@ struct MoviesDetailsExternalPageView: View {
                     .font(.system(size: 15))
             }
         }
-        .padding(.top)
+        .padding(.vertical)
     }
 }
