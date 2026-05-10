@@ -28,6 +28,10 @@ extension UIDevice {
     static var isVision: Bool = {
         return UIDevice.current.userInterfaceIdiom == .vision
     }()
+    
+    static var isTV: Bool = {
+        return UIDevice.current.userInterfaceIdiom == .tv
+    }()
 
 }
 #endif

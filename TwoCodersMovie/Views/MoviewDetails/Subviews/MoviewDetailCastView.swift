@@ -50,8 +50,10 @@ struct MoviewDetailCastView: View {
             .modifier(ScrollPaging())
         }
         .fullScreenCover(item: $mediaFullScreenCast, content: { fullScreenMedia in
+#if !os(tvOS)
             ShowImageFullScreen(url: fullScreenMedia.url.absoluteString)
                 .modifier(AnimationTransition(id: fullScreenMedia.url.absoluteString, namespace: namespace))
+#endif
         })
     }
 }

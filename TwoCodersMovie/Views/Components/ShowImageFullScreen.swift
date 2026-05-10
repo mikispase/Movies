@@ -7,7 +7,7 @@
 
 import SwiftUI
 import SDWebImageSwiftUI
-
+#if canImport(UIKit) && !os(tvOS)
 struct ShowImageFullScreen: View {
     let url: String
 
@@ -34,7 +34,9 @@ struct ShowImageFullScreen: View {
         }
     }
 }
+#endif
 
+#if canImport(UIKit) && !os(tvOS)
 struct FullImage: View {
     let url: String
 
@@ -131,3 +133,4 @@ struct FullImage: View {
         self.lastTranslation = .zero
     }
 }
+#endif

@@ -15,7 +15,7 @@ struct MoviesView: View {
     var body: some View {
         NavigationStack(path: $router.path) {
             ScrollView {
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: 175, maximum: 175), spacing: 10, alignment: .leading)],
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: UIDevice.isTV ? 475 : 175, maximum: UIDevice.isTV ? 475 :  175), spacing:UIDevice.isTV ? 60 : 10, alignment: .leading)],
                           alignment: .center, spacing: 10) {
                     
                     let model = (viewModel.searching && embederdSearchInMainView) ? viewModel.searchObjects : viewModel.movies
@@ -28,7 +28,10 @@ struct MoviesView: View {
                         } label: {
                             MovieCard(movie: movie)
                         }
-                        .frame(width: 175, height: 300)
+                        .frame(width: UIDevice.isTV ? 475 : 175, height:  UIDevice.isTV ? 530 :  300)
+                        .if(UIDevice.isVision) { view in
+                            view.buttonStyle(.plain)
+                        }
                     }
                     if viewModel.searching && embederdSearchInMainView {
                         if viewModel.searchObjects.count > 0  && viewModel.shoudLoadMoreSearch {
@@ -50,14 +53,26 @@ struct MoviesView: View {
             .modifier(NavigationModifier())
         }
         .if(embederdSearchInMainView) { view in
+            #if os(tvOS)
+            view.searchable(text: $viewModel.searchText)
+            #else
             view.searchable(text: $viewModel.searchText, placement: .navigationBarDrawer(displayMode: .automatic))
+            #endif
         }
         .if(embederdSearchInMainView) { view in
+            #if os(tvOS)
+            view.searchScopes($viewModel.searchScope) {
+                ForEach(SearchScope.allCases, id: \.self) { scope in
+                    Text(scope.rawValue.capitalized)
+                }
+            }
+            #else
             view.searchScopes($viewModel.searchScope, activation: .onSearchPresentation) {
                 ForEach(SearchScope.allCases, id: \.self) { scope in
                     Text(scope.rawValue.capitalized)
                 }
             }
+            #endif
         }
     }
 }

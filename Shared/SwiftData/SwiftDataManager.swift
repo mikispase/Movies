@@ -136,7 +136,6 @@ actor DBActor {
         }
     }
     
-    
     func getDetails(id: Int) -> DetailsObject? {
         let predicate = #Predicate<DetailsObject> { $0.id == id }
         var descriptor = FetchDescriptor<DetailsObject>(predicate: predicate)

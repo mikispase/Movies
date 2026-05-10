@@ -49,7 +49,10 @@ struct NewTabbar: View {
         .if(UIDevice.isIpad) {view in
             view.environment(\.horizontalSizeClass, .compact)
         }
+#if !os(tvOS)
         .tabViewStyle(.sidebarAdaptable)
+#endif
+
     }
 }
 

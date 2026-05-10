@@ -29,6 +29,9 @@ struct MovieDetailsView: View {
                             viewModel.mediaFullScreen = mediaFullScreen
                         }
                         .ignoresSafeArea(.all)
+#if os(tvOS)
+.focusSection()
+#endif
                         
                         VStack(alignment: .leading, spacing: 0) {
                             if let overview =  viewModel.movie.overview, !overview.isEmpty {
@@ -61,13 +64,19 @@ struct MovieDetailsView: View {
                         }
                         .padding(.leading)
                         .redacted(reason: viewModel.isLoading  ? .placeholder  : [])
+#if os(tvOS)
+.focusSection()
+#endif
                         
                     }
+#if os(tvOS)
+.focusSection()
+#endif
                 }
             }
         }
         .navigationBarBackButtonHidden()
-        .navigationBarTitleDisplayMode(.inline)
+        .modifier(NavigationTitleInline())
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Button {
@@ -98,12 +107,16 @@ struct MovieDetailsView: View {
         }
         .navigationTitle(viewModel.moviewDetails?.originalTitle ?? viewModel.movie.title ?? viewModel.movie.originalTitle ?? "")
         .fullScreenCover(item: $viewModel.mediaFullScreen, content: { fullScreenMedia in
+#if !os(tvOS)
             ShowImageFullScreen(url: fullScreenMedia.url.absoluteString)
                 .modifier(AnimationTransition(id: "fullScreenMedia", namespace: namespace))
+            #endif
         })
         .fullScreenCover(item: $viewModel.mediaFullScreen, content: { fullScreenMedia in
+#if !os(tvOS)
             ShowImageFullScreen(url: fullScreenMedia.url.absoluteString)
                 .modifier(AnimationTransition(id: "fullScreenMediaCast", namespace: namespace))
+#endif
         })
     }
 }

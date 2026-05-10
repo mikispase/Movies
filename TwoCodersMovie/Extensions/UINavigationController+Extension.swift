@@ -5,6 +5,7 @@
 //  Created by Dimitar Spasovski on 06/05/2026.
 //
 
+#if canImport(UIKit) && !os(tvOS)
 import UIKit
 import SwiftUI
 
@@ -20,3 +21,4 @@ extension UINavigationController: @retroactive UIGestureRecognizerDelegate {
         return viewControllers.count > 1
     }
 }
+#endif

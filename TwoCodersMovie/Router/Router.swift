@@ -70,7 +70,6 @@ enum RouterType: Sendable {
     case favorite
     case search
 
- 
     init(int: Int) {
         switch int {
         case 0: self = .home
@@ -104,10 +103,13 @@ public struct NavigationModifier: ViewModifier {
                 // Beter way is present build in SafariController
                 // This is example with UIViewRepresentable
                // WebView(url: web.url)
+#if !os(tvOS)
                 SafariView(url: web.url)
                     .navigationBarBackButtonHidden()
                     .navigationBarTitleDisplayMode(.inline)
                     .ignoresSafeArea()
+#endif
             })
+
     }
 }

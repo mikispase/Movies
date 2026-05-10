@@ -5,7 +5,7 @@
 //  Created by Dimitar Spasovski on 06/05/2026.
 //
 
-#if canImport(UIKit)
+#if canImport(UIKit) && !os(tvOS)
 import UIKit
 import SwiftUI
 import SafariServices

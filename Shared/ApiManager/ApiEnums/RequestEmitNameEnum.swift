@@ -32,8 +32,7 @@ enum RequestEmitNameEnum {
     var description: String {
         switch self {
         case .trending:
-            //return "discover/movie"
-            return "trending/movie/day"
+            return "trending/movie/day" 
         case .details(let type):
             switch type {
             case .movie(let movieId):

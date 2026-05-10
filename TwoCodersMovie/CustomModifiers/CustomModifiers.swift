@@ -85,3 +85,44 @@ struct ScrollPaging: ViewModifier {
         }
     }
 }
+
+struct NavigationTitleInline: ViewModifier {
+    func body(content: Content) -> some View {
+#if !os(tvOS)
+        content.navigationBarTitleDisplayMode(.inline)
+        #else
+        content
+#endif
+    }
+}
+
+struct SearchableModifier: ViewModifier {
+    @Binding var text:String
+    
+    func body(content: Content) -> some View {
+#if !os(tvOS)
+        content
+            .searchable(text: $text, placement: .navigationBarDrawer(displayMode: .automatic))
+#else
+        content
+#endif
+        
+    }
+}
+
+struct SearchableScopeModifier: ViewModifier {
+    @Binding var searchScope:SearchScope
+    
+    func body(content: Content) -> some View {
+#if !os(tvOS)
+        content
+            .searchScopes($searchScope, activation: .onSearchPresentation) {
+                ForEach(SearchScope.allCases, id: \.self) { scope in
+                    Text(scope.rawValue.capitalized)
+                }
+            }
+#else
+        content
+#endif
+    }
+}

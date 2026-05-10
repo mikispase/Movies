@@ -24,7 +24,7 @@ struct FavoriteView:View {
                     )
                 } else {
                     ScrollView {
-                        LazyVGrid(columns: [GridItem(.adaptive(minimum: 175, maximum: 175), spacing: 10, alignment: .leading)],
+                        LazyVGrid(columns: [GridItem(.adaptive(minimum: UIDevice.isTV ? 475 : 175, maximum: UIDevice.isTV ? 475 :  175), spacing:UIDevice.isTV ? 60 : 10, alignment: .leading)],
                                   alignment: .center, spacing: 10) {
                             ForEach(favouriteMoviee, id: \.customId) { movie in
                                 Button {
@@ -34,10 +34,9 @@ struct FavoriteView:View {
                                 } label: {
                                     MovieCard(movie: movie)
                                 }
-                                .frame(width: 175, height: 270)
-                                .overlay(alignment: .topTrailing) {
-                                    FavoriteHeart(model: movie)
-                                        .offset(x: -15, y: 15)
+                                .frame(width: UIDevice.isTV ? 475 : 175, height:  UIDevice.isTV ? 530 :  300)
+                                .if(UIDevice.isVision) { view in
+                                    view.buttonStyle(.plain)
                                 }
                             }
                         }
