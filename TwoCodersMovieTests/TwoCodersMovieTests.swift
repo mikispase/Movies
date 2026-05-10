@@ -106,10 +106,7 @@ struct TwoCodersMovieTests {
     @Test
     func testApiFailure() async {
         do {
-            _ = try await ApiManager.shared.request(
-                name: .details(.movie(movieId: -1))
-            )
-            
+            _ = try await ApiManager.shared.request(name: .details(.movie(movieId: -1)))
             Issue.record("Expected failure")
         } catch {
             #expect(true)
@@ -143,7 +140,7 @@ struct TwoCodersMovieTests {
                 "page": 1
             ]
             
-            let json = try await ApiManager.shared.request(name: .discover, params: params, method: .get)
+            let json = try await ApiManager.shared.request(name: .trending, params: params, method: .get)
             guard let results = json["results"].array else {  return }
             let decoder = JSONDecoder()
             let movies = try decoder.decode([Movie].self, from:  JSON(results).rawData())
@@ -157,7 +154,7 @@ struct TwoCodersMovieTests {
     @Test
     func testCodableDecodableFailed() async {
         do {
-            let json = try await ApiManager.shared.request(name: .discover, method: .get)
+            let json = try await ApiManager.shared.request(name: .trending, method: .get)
             let decoder = JSONDecoder()
             let _ = try decoder.decode([Movie].self, from: json.rawData())
             Issue.record("Expected failure")

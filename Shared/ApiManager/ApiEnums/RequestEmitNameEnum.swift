@@ -25,13 +25,13 @@ enum DetailsTypeEnum {
 }
 
 enum RequestEmitNameEnum {
-    case discover
+    case trending
     case details(DetailsTypeEnum)
     case searchMovie(SearcTypeEnum)
 
     var description: String {
         switch self {
-        case .discover:
+        case .trending:
             //return "discover/movie"
             return "trending/movie/day"
         case .details(let type):

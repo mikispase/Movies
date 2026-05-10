@@ -65,7 +65,7 @@ class MoviesViewModel: MainViewModel {
                 "page": page
             ]
         
-            let json =  try await api.request(name: .discover, params: params, method: .get)
+            let json =  try await api.request(name: .trending, params: params, method: .get)
             if totalPages == 0 {
                 totalPages = json["total_pages"].intValue
             }

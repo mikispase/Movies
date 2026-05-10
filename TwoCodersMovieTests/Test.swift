@@ -83,10 +83,7 @@ final class Test: XCTestCase {
     
     func testApiFailure() async {
         do {
-            _ = try await ApiManager.shared.request(
-                name: .details(.movie(movieId: -1))
-            )
-            
+            _ = try await ApiManager.shared.request(name: .details(.movie(movieId: -1)))
             XCTFail("Expected failure")
         } catch {
             XCTAssertTrue(true)
@@ -119,7 +116,7 @@ final class Test: XCTestCase {
                 "page": 1
             ]
             
-            let json = try await ApiManager.shared.request(name: .discover, params: params, method: .get)
+            let json = try await ApiManager.shared.request(name: .trending, params: params, method: .get)
             guard let results = json["results"].array else {  return }
             let decoder = JSONDecoder()
             let movies = try decoder.decode([Movie].self, from:  JSON(results).rawData())
@@ -132,7 +129,8 @@ final class Test: XCTestCase {
     
     func testCodableDecodableFailed() async {
         do {
-            let json = try await ApiManager.shared.request(name: .discover, method: .get)
+            // case miisning params
+            let json = try await ApiManager.shared.request(name: .trending, method: .get)
             let decoder = JSONDecoder()
             let _ = try decoder.decode([Movie].self, from: json.rawData())
             XCTFail("Expected failure")
@@ -152,6 +150,7 @@ final class Test: XCTestCase {
     
     func testSearchSeriesMissedQuery() async {
         do {
+            // missing params
             let result = try await ApiManager.shared.request(name: .searchMovie(.series), method: .get)
             XCTAssertEqual(result, JSON.null)
             XCTAssertEqual(result, JSON.null)
@@ -214,7 +213,7 @@ final class Test: XCTestCase {
         ]
         
         let json = try await ApiManager.shared.request(
-            name: .discover,
+            name: .trending,
             params: params,
             method: .get
         )
@@ -226,10 +225,7 @@ final class Test: XCTestCase {
     
     func testInvalidMovieIdThrows() async {
         do {
-            _ = try await ApiManager.shared.request(
-                name: .details(.movie(movieId: -999))
-            )
-            
+            _ = try await ApiManager.shared.request(name: .details(.movie(movieId: -999)))
             XCTFail("Should throw")
         } catch {
             XCTAssertTrue(true)
@@ -261,7 +257,6 @@ final class Test: XCTestCase {
     
     func testViewModelInitialState() {
         let model = MoviesViewModel(fromMockUp: true)
-        
         XCTAssertTrue(model.movies.isEmpty)
         XCTAssertEqual(model.page, 1)
     }
@@ -297,30 +292,17 @@ final class Test: XCTestCase {
     
     func testParsingDetailsObject() async{
         do {
-            
-            let params: [String: Any] = [
-                "page": 1
-            ]
-            
-            let json = try await ApiManager.shared.request(
-                name: .discover,
-                params: params,
-                method: .get
-            )
-            
+            let params: [String: Any] = ["page": 1]
+            let json = try await ApiManager.shared.request(name: .trending,params: params,method: .get)
             let results = json["results"].arrayValue
-            
-            let movie =   Movie(json: results.first!)
-            
+            guard let movieJson = results.first else { return }
+            let movie = Movie(json: movieJson)
             let params1 = ["language": "en-US"]
             let reguest = RequestEmitNameEnum.details(.movie(movieId: movie.id))
-            
             let json1 = try await ApiManager.shared.request(name: reguest, params: params1, method: .get)
             let details = DetailsObject(json: json1)
-            
             XCTAssertNotNil(details.id)
             XCTAssertNotNil(details.posterImage)
-            
             let creditJson =  try await ApiManager.shared.request(name: .details(.credit(.movie(id: movie.id))),params: params1)
             let credit = CreditsObject(json: creditJson)
             XCTAssertNotNil(credit.id)
@@ -328,40 +310,30 @@ final class Test: XCTestCase {
             XCTAssertNotNil(credit.crew.first?.id)
             XCTAssertNotNil(credit.cast.first?.posterImage)
 
-            
+            // detaisl encode / decode
             let decoder = JSONDecoder()
             let details1 = try decoder.decode(DetailsObject.self, from:  JSON(json1).rawData())
-            
             XCTAssertNotNil(details1)
-            
             do {
                 let encoder = JSONEncoder()
                 let data = try encoder.encode(details1)
                 let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
-
-                // 3. Assert
                 XCTAssertNotNil(jsonObject)
             } catch {
                 XCTFail("Encoding or serialization failed: \(error)")
             }
             
-            
+            // credit encode/ decode
             let credit1 = try decoder.decode(CreditsObject.self, from:  JSON(creditJson).rawData())
             XCTAssertNotNil(credit1)
-            
             do {
                 let encoder = JSONEncoder()
                 let data = try encoder.encode(credit1)
                 let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
-
-                // 3. Assert
                 XCTAssertNotNil(jsonObject)
             } catch {
                 XCTFail("Encoding or serialization failed: \(error)")
             }
-            
-            
-            
             
         } catch {
             debugPrint(error)
@@ -370,18 +342,14 @@ final class Test: XCTestCase {
         
     func testGHttpMethos() {
         let httpMethodPOST = HttpMethod.post
-        
         XCTAssertEqual(httpMethodPOST.string, "POST")
-
         let httpMethodGET = HttpMethod.get
-        
         XCTAssertEqual(httpMethodGET.string, "GET")
     }
 
     func testReadFromDB() async {
         do {
             let objects = await SwiftDataManager.shared.getAllMovies()
-            
             XCTAssertNotNil(objects)
             
             if objects.count > 0 {
@@ -428,8 +396,6 @@ final class Test: XCTestCase {
                     let encoder = JSONEncoder()
                     let data = try encoder.encode(movieByCustomId!)
                     let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
-
-                    // 3. Assert
                     XCTAssertNotNil(jsonObject)
                 } catch {
                     XCTFail("Encoding or serialization failed: \(error)")
@@ -469,24 +435,15 @@ final class Test: XCTestCase {
     
     
     func testCache() async {
-        do {
-            let objects = await SwiftDataManager.shared.getAllMovies()
-
-            guard let first = objects.first else { return }
-            CacheManager.shared.set(first, forKey: "TestingObjects")
-            
-            if let first = CacheManager.shared.get(Movie.self, forKey: "TestingObjects") {
-                XCTAssertNotNil(first)
-                CacheManager.shared.remove(forKey: "TestingObjects")
-            }
-            
-            let nilObject = CacheManager.shared.get(Movie.self, forKey: "TestingObjects")
-            XCTAssertNil(nilObject)
-            
-            
-        } catch {
-            XCTFail("not working cache \(error)")
+        let objects = await SwiftDataManager.shared.getAllMovies()
+        guard let first = objects.first else { return }
+        CacheManager.shared.set(first, forKey: "TestingObjects")
+        if let first = CacheManager.shared.get(Movie.self, forKey: "TestingObjects") {
+            XCTAssertNotNil(first)
+            CacheManager.shared.remove(forKey: "TestingObjects")
         }
+        let nilObject = CacheManager.shared.get(Movie.self, forKey: "TestingObjects")
+        XCTAssertNil(nilObject)
     }
     
     func testMainModel() async {
@@ -497,5 +454,4 @@ final class Test: XCTestCase {
         model.setError(NSError(domain: "", code: 100))
         XCTAssertNotNil(model.phaseFetch)
     }
-
 }
