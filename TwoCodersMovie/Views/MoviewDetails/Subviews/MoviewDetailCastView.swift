@@ -47,7 +47,6 @@ struct MoviewDetailCastView: View {
                 }
             }
         }
-        .padding(.top)
         .fullScreenCover(item: $mediaFullScreenCast, content: { fullScreenMedia in
             ShowImageFullScreen(url: fullScreenMedia.url.absoluteString)
                 .modifier(AnimationTransition(id: fullScreenMedia.url.absoluteString, namespace: namespace))
