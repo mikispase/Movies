@@ -46,7 +46,6 @@ struct PosterImage: View {
             }
             .if(addBlur) { view in
                 view.blur(radius: 40, opaque: true)
-
             }
         }
     }

@@ -24,6 +24,10 @@ extension UIDevice {
     static var isIPhone: Bool = {
         return UIDevice.current.userInterfaceIdiom == .phone
     }()
+    
+    static var isVision: Bool = {
+        return UIDevice.current.userInterfaceIdiom == .vision
+    }()
 
 }
 #endif

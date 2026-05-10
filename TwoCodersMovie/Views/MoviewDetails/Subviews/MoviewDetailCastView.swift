@@ -46,6 +46,8 @@ struct MoviewDetailCastView: View {
                     }
                 }
             }
+            .modifier(ScrollTargetLayout())
+            .modifier(ScrollPaging())
         }
         .fullScreenCover(item: $mediaFullScreenCast, content: { fullScreenMedia in
             ShowImageFullScreen(url: fullScreenMedia.url.absoluteString)

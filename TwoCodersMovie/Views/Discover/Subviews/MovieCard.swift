@@ -36,11 +36,13 @@ struct MovieCard: View {
                 Spacer()
             }
         }
-        .background {
-            if colorScheme == .dark {
-                Color.gray.opacity(0.2)
-            } else {
-                Color.black.opacity(0.1)
+        .if(!UIDevice.isVision) { view in
+            view.background {
+                if colorScheme == .dark {
+                    Color.gray.opacity(0.2)
+                } else {
+                    Color.black.opacity(0.1)
+                }
             }
         }
         .overlay(alignment: .topTrailing) {
