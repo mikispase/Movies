@@ -30,6 +30,7 @@ class Movie: Codable, Identifiable {
     var isSoftcore: Bool?
     var genreIds: [Int]?
     var myFavorite:Bool = false
+    var mediaType:String = ""
 
     // MARK: - Coding Keys
     enum CodingKeys: String, CodingKey {
@@ -50,6 +51,7 @@ class Movie: Codable, Identifiable {
         case isSoftcore = "softcore"
         case genreIds = "genre_ids"
         case myFavorite = "myFavorite"
+        case mediaType = "media_type"
 
     }
 
@@ -71,6 +73,7 @@ class Movie: Codable, Identifiable {
         hasVideo = json["video"].bool
         isSoftcore = json["softcore"].bool
         genreIds = json["genre_ids"].arrayObject as? [Int]
+        mediaType = json["media_type"].stringValue
     }
 
     // MARK: - Codable (Decodable)
@@ -93,6 +96,7 @@ class Movie: Codable, Identifiable {
         isSoftcore = try container.decodeIfPresent(Bool.self, forKey: .isSoftcore)
         genreIds = try container.decodeIfPresent([Int].self, forKey: .genreIds)
         myFavorite = try container.decodeIfPresent(Bool.self, forKey: .myFavorite) ?? false
+        mediaType = try container.decode(String.self, forKey: .mediaType)
     }
 
     // MARK: - Codable (Encodable)
@@ -115,6 +119,7 @@ class Movie: Codable, Identifiable {
         try container.encodeIfPresent(isSoftcore, forKey: .isSoftcore)
         try container.encodeIfPresent(genreIds, forKey: .genreIds)
         try container.encodeIfPresent(myFavorite, forKey: .myFavorite)
+        try container.encodeIfPresent(mediaType, forKey: .mediaType)
     }
 
     var posterImage: URL? {
