@@ -16,11 +16,11 @@ struct MovieDetailsProductionContriesView: View {
                 Text("Production Contries")
                     .font(.headline)
             }
-            HStack {
-                ForEach(countries, id: \.iso) { country in
+            FlowHStack {
+                ForEach(countries, id: \.code) { country in
                     HStack(spacing: 0) {
-                        Text(country.flagEmoji(for: country.iso ?? ""))
-                        Text(country.name ?? "")
+                        Text(country.flagEmoji(for: country.code))
+                        Text(country.name)
                             .font(.system(size: 15))
                             .padding(.leading, 3)
                     }

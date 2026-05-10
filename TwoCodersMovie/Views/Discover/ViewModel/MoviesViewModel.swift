@@ -102,7 +102,11 @@ class MoviesViewModel: MainViewModel {
             setError(error)
             debugPrint(error)
             
-            self.movies = await SwiftDataManager.shared.getAllMovies()
+            if let cached = CacheManager.shared.get([Movie].self, forKey: "Movie") {
+                haveCache = true
+                self.movies = cached
+            }
+          //  self.movies = await SwiftDataManager.shared.getAllMovies()
             
         }
     }

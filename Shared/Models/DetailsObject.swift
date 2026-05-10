@@ -7,20 +7,22 @@
 
 import Foundation
 import SwiftyJSON
+import SwiftData
 
 // MARK: - MovieDetails
+@Model
 class DetailsObject: Codable, Identifiable {
+    @Attribute(.unique) var id: Int = 0
     var homepage: String?
     var voteCount: Int?
     var overview: String?
-    var id: Int?
     var backdropPath: String?
     var productionCountries: [ProductionCountry]?
     var voteAverage: Double?
     var posterPath: String?
     var popularity: Double?
     var budget: Int?
-    var originCountry: [String]?
+    var originCountry: [String] = []
     var belongsToCollection: Collection?
     var adult: Bool?
     var tagline: String?
@@ -71,30 +73,29 @@ class DetailsObject: Codable, Identifiable {
     // MARK: - Decoder
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-
+        id = try container.decode(Int.self, forKey: .id)
         homepage = try container.decodeIfPresent(String.self, forKey: .homepage)
         voteCount = try container.decodeIfPresent(Int.self, forKey: .voteCount)
         overview = try container.decodeIfPresent(String.self, forKey: .overview)
-        id = try container.decodeIfPresent(Int.self, forKey: .id)
         backdropPath = try container.decodeIfPresent(String.self, forKey: .backdropPath)
-        productionCountries = try container.decodeIfPresent([ProductionCountry].self, forKey: .productionCountries)
+        productionCountries = try container.decodeIfPresent([ProductionCountry].self, forKey: .productionCountries) ?? []
         voteAverage = try container.decodeIfPresent(Double.self, forKey: .voteAverage)
         posterPath = try container.decodeIfPresent(String.self, forKey: .posterPath)
         popularity = try container.decodeIfPresent(Double.self, forKey: .popularity)
         budget = try container.decodeIfPresent(Int.self, forKey: .budget)
-        originCountry = try container.decodeIfPresent([String].self, forKey: .originCountry)
+        originCountry = try container.decode([String].self, forKey: .originCountry)
         belongsToCollection = try container.decodeIfPresent(Collection.self, forKey: .belongsToCollection)
         adult = try container.decodeIfPresent(Bool.self, forKey: .adult)
         tagline = try container.decodeIfPresent(String.self, forKey: .tagline)
-        spokenLanguages = try container.decodeIfPresent([SpokenLanguage].self, forKey: .spokenLanguages)
-        productionCompanies = try container.decodeIfPresent([ProductionCompany].self, forKey: .productionCompanies)
+        spokenLanguages = try container.decode([SpokenLanguage].self, forKey: .spokenLanguages)
+        productionCompanies = try container.decode([ProductionCompany].self, forKey: .productionCompanies)
         softcore = try container.decodeIfPresent(Bool.self, forKey: .softcore)
         releaseDate = try container.decodeIfPresent(String.self, forKey: .releaseDate)
         imdbID = try container.decodeIfPresent(String.self, forKey: .imdbID)
         originalLanguage = try container.decodeIfPresent(String.self, forKey: .originalLanguage)
         title = try container.decodeIfPresent(String.self, forKey: .title)
         runtime = try container.decodeIfPresent(Int.self, forKey: .runtime)
-        genres = try container.decodeIfPresent([Genre].self, forKey: .genres)
+        genres = try container.decode([Genre].self, forKey: .genres)
         originalTitle = try container.decodeIfPresent(String.self, forKey: .originalTitle)
         video = try container.decodeIfPresent(Bool.self, forKey: .video)
         revenue = try container.decodeIfPresent(Int.self, forKey: .revenue)
@@ -104,11 +105,10 @@ class DetailsObject: Codable, Identifiable {
     // MARK: - Encoder
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-
+        try container.encode(id, forKey: .id)
         try container.encodeIfPresent(homepage, forKey: .homepage)
         try container.encodeIfPresent(voteCount, forKey: .voteCount)
         try container.encodeIfPresent(overview, forKey: .overview)
-        try container.encodeIfPresent(id, forKey: .id)
         try container.encodeIfPresent(backdropPath, forKey: .backdropPath)
         try container.encodeIfPresent(productionCountries, forKey: .productionCountries)
         try container.encodeIfPresent(voteAverage, forKey: .voteAverage)
@@ -139,7 +139,7 @@ class DetailsObject: Codable, Identifiable {
         homepage = json["homepage"].string
         voteCount = json["vote_count"].int
         overview = json["overview"].string
-        id = json["id"].int
+        id = json["id"].intValue
         backdropPath = json["backdrop_path"].string
         productionCountries = json["production_countries"].arrayValue.map { ProductionCountry(json: $0) }
         voteAverage = json["vote_average"].double
@@ -174,9 +174,10 @@ class DetailsObject: Codable, Identifiable {
     }
 }
 
-class ProductionCountry: Codable, Identifiable {
-    var name: String?
-    var iso: String?
+@Model
+class ProductionCountry : Codable {
+    var name: String = ""
+    var code: String = ""
 
     enum CodingKeys: String, CodingKey {
         case name
@@ -185,19 +186,19 @@ class ProductionCountry: Codable, Identifiable {
 
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        name = try container.decodeIfPresent(String.self, forKey: .name)
-        iso = try container.decodeIfPresent(String.self, forKey: .iso)
+        name = try container.decode(String.self, forKey: .name)
+        code = try container.decode(String.self, forKey: .iso)
     }
 
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encodeIfPresent(name, forKey: .name)
-        try container.encodeIfPresent(iso, forKey: .iso)
+        try container.encode(name, forKey: .name)
+        try container.encode(code, forKey: .iso)
     }
 
     init(json: JSON) {
-        name = json["name"].string
-        iso = json["iso_3166_1"].string
+        name = json["name"].stringValue
+        code = json["iso_3166_1"].stringValue
     }
 
     func flagEmoji(for countryCode: String) -> String {
@@ -211,6 +212,7 @@ class ProductionCountry: Codable, Identifiable {
     }
 }
 
+@Model
 class Collection: Codable {
     var backdropPath: String?
     var id: Int?
@@ -248,6 +250,7 @@ class Collection: Codable {
     }
 }
 
+@Model
 class SpokenLanguage: Codable {
     var iso: String?
     var name: String?
@@ -280,6 +283,7 @@ class SpokenLanguage: Codable {
     }
 }
 
+@Model
 class ProductionCompany: Codable {
     var logoPath: String?
     var originCountry: String?
@@ -317,6 +321,7 @@ class ProductionCompany: Codable {
     }
 }
 
+@Model
 class Genre: Codable {
     var name: String?
     var id: Int?

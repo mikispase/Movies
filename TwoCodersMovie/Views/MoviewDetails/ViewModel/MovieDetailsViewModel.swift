@@ -17,7 +17,7 @@ class MovieDetailsViewModel: MainViewModel {
     
     @Published var mediaFullScreenCast: FullScreenMedia?
 
-    @Published var credit: CreditsResponse?
+    @Published var credit: CreditsObject?
 
     @Published var isFavorite: Bool = false
     
@@ -31,11 +31,23 @@ class MovieDetailsViewModel: MainViewModel {
         super.init(ObjectIdentifier(Self.Type.self))
         
         if !fromMockUp {
-            Task {
-                await withTaskGroup(of: Void.self) { group in
-                    group.addTask(priority: .userInitiated) {  [weak self] in
-                        await self?.getDetails()
+            Task { @MainActor in
+                
+                if let detailsObject = await SwiftDataManager.shared.getDetailsById(id: movie.id) {
+                    self.moviewDetails = detailsObject
+                    
+                    if let creditDetials = await SwiftDataManager.shared.getCreditDetailsById(id: movie.id) {
+                        self.credit = creditDetials
                     }
+                    self.phaseFetch = .success(detailsObject)
+                }
+                
+                await self.getDetails()
+                
+                await withTaskGroup(of: Void.self) { group in
+//                    group.addTask(priority: .userInitiated) {  [weak self] in
+//                        await self?.getDetails()
+//                    }
                     group.addTask(priority: .userInitiated) { [weak self] in
                         await self?.checkIsFavorite()
                     }
@@ -60,10 +72,14 @@ class MovieDetailsViewModel: MainViewModel {
             
             let requestCredit = movie.hasVideo ?? true ? RequestEmitNameEnum.details(.credit(.series(id: movie.id))) : RequestEmitNameEnum.details(.credit(.movie(id: movie.id)))
             if let creditJson = try? await api.request(name: requestCredit, params: params, method: .get) {
-                let creditResponce = CreditsResponse(json: creditJson)
-                withAnimation {
-                    self.credit = creditResponce
-                }
+                let creditResponce = CreditsObject(json: creditJson)
+                self.credit = creditResponce
+            
+                await SwiftDataManager.shared.saveCreditsObject(detaisObject: creditResponce)
+            }
+            
+            if let moviewDetails = moviewDetails {
+                await SwiftDataManager.shared.saveDetailsObject(detaisObject: moviewDetails)
             }
             
             if let obj = moviewDetails {
@@ -72,6 +88,15 @@ class MovieDetailsViewModel: MainViewModel {
         } catch {
             setError(error)
             debugPrint(error)
+            
+            if let detailsObject = await SwiftDataManager.shared.getDetailsById(id: movie.id) {
+                self.moviewDetails = detailsObject
+                
+                if let creditDetials = await SwiftDataManager.shared.getCreditDetailsById(id: movie.id) {
+                    self.credit = creditDetials
+                }
+                self.phaseFetch = .success(detailsObject)
+            }
         }
     }
     

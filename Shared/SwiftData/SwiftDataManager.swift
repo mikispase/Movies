@@ -19,6 +19,8 @@ class SwiftDataManager : ObservableObject {
             let configuration = ModelConfiguration(
                 isStoredInMemoryOnly: false)
             modelContainer = try ModelContainer(for:Movie.self,
+                                                DetailsObject.self,
+                                                CreditsObject.self,
                                                 configurations: configuration)
             modelContext = ModelContext(modelContainer)
             modelContext.autosaveEnabled = false
@@ -120,6 +122,105 @@ actor DBActor {
             return nil
         }
     }
+    
+    func getDetails(id: Int) -> DetailsObject? {
+        let predicate = #Predicate<DetailsObject> { $0.id == id }
+        var descriptor = FetchDescriptor<DetailsObject>(predicate: predicate)
+        descriptor.fetchLimit = 1
+        
+        do {
+            return try modelContext.fetch(descriptor).first
+        } catch {
+            print("*** cannot fetch movie by id: \(error.localizedDescription)")
+            return nil
+        }
+    }
+    
+    func upsertDetailsObject(_ incoming: DetailsObject) throws {
+        let descriptor = FetchDescriptor<DetailsObject>(
+            predicate: #Predicate { $0.id == incoming.id }
+        )
+        
+        let existing = try modelContext.fetch(descriptor).first
+        
+        if let existing = existing {
+            // Update existing object
+            existing.homepage = incoming.homepage
+            existing.voteCount = incoming.voteCount
+            existing.overview = incoming.overview
+            existing.backdropPath = incoming.backdropPath
+            existing.productionCountries = incoming.productionCountries
+            existing.voteAverage = incoming.voteAverage
+            existing.posterPath = incoming.posterPath
+            existing.popularity = incoming.popularity
+            existing.budget = incoming.budget
+            existing.originCountry = incoming.originCountry
+            existing.belongsToCollection = incoming.belongsToCollection
+            existing.adult = incoming.adult
+            existing.tagline = incoming.tagline
+            existing.spokenLanguages = incoming.spokenLanguages
+            existing.productionCompanies = incoming.productionCompanies
+            existing.softcore = incoming.softcore
+            existing.releaseDate = incoming.releaseDate
+            existing.imdbID = incoming.imdbID
+            existing.title = incoming.title
+            existing.runtime = incoming.runtime
+            existing.genres = incoming.genres
+            existing.originalTitle = incoming.originalTitle
+            existing.video = incoming.video
+            existing.revenue = incoming.revenue
+            existing.status = incoming.status
+        } else {
+            // Insert new object
+            modelContext.insert(incoming)
+        }
+        
+        try modelContext.save()
+    }
+    
+    func upsertCreditsObject(_ incoming: CreditsObject) throws {
+        let descriptor = FetchDescriptor<CreditsObject>(
+            predicate: #Predicate { $0.id == incoming.id }
+        )
+        
+        let existing = try modelContext.fetch(descriptor).first
+        
+        if let existing = existing {
+            existing.cast = incoming.cast
+            existing.crew = incoming.crew
+        } else {
+            // Insert new object
+            modelContext.insert(incoming)
+        }
+        
+        try modelContext.save()
+    }
+
+    func getCreditDetails(id: Int) -> CreditsObject? {
+        let predicate = #Predicate<CreditsObject> { $0.id == id }
+        var descriptor = FetchDescriptor<CreditsObject>(predicate: predicate)
+        descriptor.fetchLimit = 1
+        
+        do {
+            return try modelContext.fetch(descriptor).first
+        } catch {
+            print("*** cannot fetch movie by id: \(error.localizedDescription)")
+            return nil
+        }
+    }
+    
+    func getAllCredits() -> [CreditsObject] {
+        let descriptor = FetchDescriptor<CreditsObject>(
+            sortBy: [SortDescriptor(\.id, order: .reverse)]
+        )
+        
+        do {
+            return try modelContext.fetch(descriptor)
+        } catch {
+            print("*** cannot fetch movies: \(error.localizedDescription)")
+            return []
+        }
+    }
 }
 
 extension SwiftDataManager {
@@ -164,5 +265,38 @@ extension SwiftDataManager {
         } catch {
             debugPrint(error)
         }
+    }
+    
+    @MainActor
+    func saveDetailsObject(detaisObject: DetailsObject) async {
+        do {
+           try await dbActor.upsertDetailsObject(detaisObject)
+        } catch {
+            debugPrint(error)
+        }
+    }
+    
+    @MainActor
+    func getDetailsById(id: Int) async -> DetailsObject? {
+        await dbActor.getDetails(id: id)
+    }
+    
+    @MainActor
+    func saveCreditsObject(detaisObject: CreditsObject) async {
+        do {
+           try await dbActor.upsertCreditsObject(detaisObject)
+        } catch {
+            debugPrint(error)
+        }
+    }
+    
+    @MainActor
+    func getCreditDetailsById(id: Int) async -> CreditsObject? {
+        await dbActor.getCreditDetails(id: id)
+    }
+    
+    @MainActor
+    func getAllCredits() async -> [CreditsObject] {
+        await dbActor.getAllCredits()
     }
 }

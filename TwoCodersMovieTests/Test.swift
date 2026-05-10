@@ -322,10 +322,12 @@ final class Test: XCTestCase {
             XCTAssertNotNil(details.posterImage)
             
             let creditJson =  try await ApiManager.shared.request(name: .details(.credit(.movie(id: movie.id))),params: params1)
-            let credit = CreditsResponse(json: creditJson)
+            let credit = CreditsObject(json: creditJson)
             XCTAssertNotNil(credit.id)
             XCTAssertNotNil(credit.cast.first?.id)
             XCTAssertNotNil(credit.crew.first?.id)
+            XCTAssertNotNil(credit.cast.first?.posterImage)
+
             
             let decoder = JSONDecoder()
             let details1 = try decoder.decode(DetailsObject.self, from:  JSON(json1).rawData())
@@ -342,6 +344,26 @@ final class Test: XCTestCase {
             } catch {
                 XCTFail("Encoding or serialization failed: \(error)")
             }
+            
+            
+            let credit1 = try decoder.decode(CreditsObject.self, from:  JSON(creditJson).rawData())
+            
+            XCTAssertNotNil(credit1)
+            
+            do {
+                let encoder = JSONEncoder()
+                let data = try encoder.encode(credit1)
+                let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+
+                // 3. Assert
+                XCTAssertNotNil(jsonObject)
+            } catch {
+                XCTFail("Encoding or serialization failed: \(error)")
+            }
+            
+            
+            
+            
         } catch {
             debugPrint(error)
         }
@@ -368,12 +390,16 @@ final class Test: XCTestCase {
                 let getObjectById = await SwiftDataManager.shared.getMovieById(id: first.id )
                 XCTAssertNotNil(getObjectById)
                 
-                let getObejctByCustomId = await SwiftDataManager.shared.getMovieById(custumId: first.customId!)
-                XCTAssertNotNil(getObejctByCustomId)
+                let getObjectByCustomId = await SwiftDataManager.shared.getMovieById(custumId: first.customId!)
+                XCTAssertNotNil(getObjectByCustomId)
+                
+                // Case
+                let getDetailsObjectById = await SwiftDataManager.shared.getAllCredits()
+                XCTAssertNotNil(getDetailsObjectById)
                 
                 //case set favorite
-                getObejctByCustomId?.myFavorite = true
-                await SwiftDataManager.shared.saveFavorite(movie: getObejctByCustomId!)
+                getObjectByCustomId?.myFavorite = true
+                await SwiftDataManager.shared.saveFavorite(movie: getObjectByCustomId!)
                 let getObejctByCustomId1 = await SwiftDataManager.shared.getMovieById(custumId: first.customId!)
                 XCTAssertEqual(getObejctByCustomId1?.myFavorite, true)
                 
@@ -383,7 +409,7 @@ final class Test: XCTestCase {
                 
                 do {
                     let encoder = JSONEncoder()
-                    let data = try encoder.encode(getObejctByCustomId!)
+                    let data = try encoder.encode(getObjectByCustomId!)
                     let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
 
                     // 3. Assert
@@ -420,6 +446,26 @@ final class Test: XCTestCase {
             try await Task.sleep(for: .seconds(2))
             XCTAssertEqual(model.searchObjects.count, 20)
         }catch {
+            XCTFail("not working search \(error)")
+        }
+    }
+    
+    
+    func testCache() async {
+        do {
+            let objects = await SwiftDataManager.shared.getAllMovies()
+
+            guard let first = objects.first else { return }
+            CacheManager.shared.set(first, forKey: "TestingObjects")
+            
+            if let first = CacheManager.shared.get(Movie.self, forKey: "TestingObjects") {
+                XCTAssertNotNil(first)
+                CacheManager.shared.remove(forKey: "TestingObjects")
+            }
+            
+            let nilObject = CacheManager.shared.get(Movie.self, forKey: "TestingObjects")
+            XCTAssertNil(nilObject)
+        } catch {
             XCTFail("not working search \(error)")
         }
     }

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MoviewDetailCastView: View {
-    let credit:CreditsResponse
+    let credit:CreditsObject
     @Namespace private var namespace
     @State var mediaFullScreenCast:FullScreenMedia?
     var body: some View {
