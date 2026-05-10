@@ -14,6 +14,7 @@ struct MoviesDetailsExternalPageView: View {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var router: Router
     @EnvironmentObject var favoriteRouter: FavoriteRouter
+    @EnvironmentObject var searchRouter: SearchRouter
 
     var body: some View {
         Button {
@@ -23,6 +24,8 @@ struct MoviesDetailsExternalPageView: View {
                 router.append(currentView: ViewsEnum.web.rawValue, value: urlObject)
             case .favorite:
                 favoriteRouter.append(currentView: ViewsEnum.web.rawValue, value: urlObject)
+            case .search:
+                searchRouter.append(currentView: ViewsEnum.web.rawValue, value: urlObject)
             }
         }label: {
             FlowHStack(horizontalSpacing: 3, verticalSpacing: 0) {

@@ -8,6 +8,7 @@
 import SwiftUI
 import Combine
 
+class SearchRouter: Router { }
 class FavoriteRouter: Router { }
 class Router: ObservableObject {
     @Published var currentView: String = ""
@@ -67,11 +68,14 @@ class Router: ObservableObject {
 enum RouterType: Sendable {
     case home
     case favorite
+    case search
+
  
     init(int: Int) {
         switch int {
         case 0: self = .home
         case 1: self = .favorite
+        case 2: self = .search
         default : self = .home
         }
     }
@@ -82,6 +86,8 @@ enum RouterType: Sendable {
             self = .home
         case "favorites":
             self = .favorite
+        case "search":
+            self = .search
         default : self = .home
         }
     }

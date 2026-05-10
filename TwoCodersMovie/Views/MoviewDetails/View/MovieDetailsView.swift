@@ -11,6 +11,7 @@ struct MovieDetailsView: View {
     @StateObject var viewModel: MovieDetailsViewModel
     @EnvironmentObject var router: Router
     @EnvironmentObject var favoriteRouter: FavoriteRouter
+    @EnvironmentObject var searchRouter: SearchRouter
     @Namespace private var namespace
     
     var body: some View {
@@ -76,6 +77,8 @@ struct MovieDetailsView: View {
                         router.onBack()
                     case .favorite:
                         favoriteRouter.onBack()
+                    case .search:
+                        searchRouter.onBack()
                     }
                     viewModel.cancellables.removeAll()
                 } label: {

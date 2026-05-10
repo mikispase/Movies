@@ -17,7 +17,9 @@ struct MoviesView: View {
             ScrollView {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 175, maximum: 175), spacing: 10, alignment: .leading)],
                           alignment: .center, spacing: 10) {
-                    let model = viewModel.searching ? viewModel.searchObjects : viewModel.movies
+                    
+                    let model = (viewModel.searching && embederdSearchInMainView) ? viewModel.searchObjects : viewModel.movies
+
                     ForEach(model, id: \.customId) { movie in
                         Button {
                             let isSeries = viewModel.searchScope == .series && viewModel.searching ? true : false
@@ -28,8 +30,7 @@ struct MoviesView: View {
                         }
                         .frame(width: 175, height: 300)
                     }
-
-                    if viewModel.searching {
+                    if viewModel.searching && embederdSearchInMainView {
                         if viewModel.searchObjects.count > 0  && viewModel.shoudLoadMoreSearch {
                             ProgressView().onAppear {
                                 viewModel.loadMore()
@@ -45,13 +46,17 @@ struct MoviesView: View {
                 }
             }
             .modifier(NavigationModifier())
-            .navigationTitle("Discover")
+            .navigationTitle("Trending")
             .toolbar((router.currentView != "") ? .hidden : .visible, for: .tabBar)
         }
-        .searchable(text: $viewModel.searchText, placement: .navigationBarDrawer(displayMode: .automatic))
-        .searchScopes($viewModel.searchScope, activation: .onSearchPresentation) {
-            ForEach(SearchScope.allCases, id: \.self) { scope in
-                Text(scope.rawValue.capitalized)
+        .if(embederdSearchInMainView) { view in
+            view.searchable(text: $viewModel.searchText, placement: .navigationBarDrawer(displayMode: .automatic))
+        }
+        .if(embederdSearchInMainView) { view in
+            view.searchScopes($viewModel.searchScope, activation: .onSearchPresentation) {
+                ForEach(SearchScope.allCases, id: \.self) { scope in
+                    Text(scope.rawValue.capitalized)
+                }
             }
         }
     }

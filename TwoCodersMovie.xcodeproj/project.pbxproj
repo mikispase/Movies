@@ -48,7 +48,6 @@
 				ApiManager/ApiEnums/HttpMethod.swift,
 				ApiManager/ApiEnums/RequestEmitNameEnum.swift,
 				ApiManager/ApiManager.swift,
-				ApiManager/Constants.swift,
 				Models/Credit.swift,
 				Models/DetailsObject.swift,
 				Models/FullScreenMedia.swift,
@@ -91,6 +90,13 @@
 			);
 			target = 24B684F92FAC2693002FF66C /* TwoCodersMovieTests */;
 		};
+		24FF9A012FB0A97200022163 /* Exceptions for "TwoCodersMovie" folder in "Shared" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Constant/Constants.swift,
+			);
+			target = 248938412FAF4241006D49E0 /* Shared */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -113,6 +119,7 @@
 			exceptions = (
 				24B684862FABFBB1002FF66C /* Exceptions for "TwoCodersMovie" folder in "TwoCodersMovie" target */,
 				24B685062FAC26EA002FF66C /* Exceptions for "TwoCodersMovie" folder in "TwoCodersMovieTests" target */,
+				24FF9A012FB0A97200022163 /* Exceptions for "TwoCodersMovie" folder in "Shared" target */,
 			);
 			path = TwoCodersMovie;
 			sourceTree = "<group>";

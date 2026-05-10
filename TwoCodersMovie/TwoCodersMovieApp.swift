@@ -13,6 +13,7 @@ import SwiftData
 struct TwoCodersMovieApp: App {
     @StateObject var router = Router()
     @StateObject var favoriteRouter = FavoriteRouter()
+    @StateObject var searchRouter = SearchRouter()
 
     init() {
         SDImageCache.shared.config.maxMemoryCount = 1
@@ -24,6 +25,7 @@ struct TwoCodersMovieApp: App {
            Tabview()
                 .environmentObject(router)
                 .environmentObject(favoriteRouter)
+                .environmentObject(searchRouter)
                 .modelContainer(SwiftDataManager.shared.modelContainer)
                 .modelContext(SwiftDataManager.shared.modelContext)
         }

@@ -10,6 +10,7 @@ import SwiftUI
 enum TabbarSelection {
     case discover
     case favorite
+    case search
 }
 
 struct Tabview:View {
@@ -24,6 +25,12 @@ struct Tabview:View {
             
             Tab("Favorite", systemImage: "heart", value: TabbarSelection.favorite) {
                 FavoriteView()
+            }
+            
+            if !embederdSearchInMainView {
+                Tab("Search", systemImage: "magnifyingglass", value: TabbarSelection.search) {
+                    SearchView()
+                }
             }
         }
         .if(UIDevice.isIpad) {view in
