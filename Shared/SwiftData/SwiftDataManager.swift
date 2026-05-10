@@ -123,6 +123,20 @@ actor DBActor {
         }
     }
     
+    func getAllDetails() -> [DetailsObject] {
+        let descriptor = FetchDescriptor<DetailsObject>(
+            sortBy: [SortDescriptor(\.id, order: .reverse)]
+        )
+        
+        do {
+            return try modelContext.fetch(descriptor)
+        } catch {
+            print("*** cannot fetch details object: \(error.localizedDescription)")
+            return []
+        }
+    }
+    
+    
     func getDetails(id: Int) -> DetailsObject? {
         let predicate = #Predicate<DetailsObject> { $0.id == id }
         var descriptor = FetchDescriptor<DetailsObject>(predicate: predicate)
@@ -131,7 +145,7 @@ actor DBActor {
         do {
             return try modelContext.fetch(descriptor).first
         } catch {
-            print("*** cannot fetch movie by id: \(error.localizedDescription)")
+            print("*** cannot fetch movie details by id: \(error.localizedDescription)")
             return nil
         }
     }
@@ -239,11 +253,6 @@ extension SwiftDataManager {
     }
     
     @MainActor
-    func movie(withID movieID: Int) async -> Movie? {
-        await dbActor.getMovie(id: movieID)
-    }
-    
-    @MainActor
     func getAllMovies() async -> [Movie] {
         await dbActor.getAllMovies()
     }
@@ -265,6 +274,11 @@ extension SwiftDataManager {
         } catch {
             debugPrint(error)
         }
+    }
+    
+    @MainActor
+    func getAllDetails() async -> [DetailsObject] {
+        await dbActor.getAllDetails()
     }
     
     @MainActor

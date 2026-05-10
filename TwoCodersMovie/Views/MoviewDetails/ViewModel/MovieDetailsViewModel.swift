@@ -65,7 +65,16 @@ class MovieDetailsViewModel: MainViewModel {
     func getDetails() async {
         do {
             let params = ["language": "en-US"]
-            let request = movie.hasVideo ?? true ? RequestEmitNameEnum.details(.series(series: movie.id)) : RequestEmitNameEnum.details(.movie(movieId: movie.id))
+            var request = movie.hasVideo ?? true ? RequestEmitNameEnum.details(.series(series: movie.id)) : RequestEmitNameEnum.details(.movie(movieId: movie.id))
+            
+            // need to double check
+            if movie.mediaType == "movie" {
+                request = RequestEmitNameEnum.details(.movie(movieId: movie.id))
+            }
+            // need to double check
+            if fromSeries {
+                request = RequestEmitNameEnum.details(.series(series: movie.id))
+            }
             
             let json = try await api.request(name: request, params: params, method: .get)
             moviewDetails = DetailsObject(json: json)
@@ -102,7 +111,7 @@ class MovieDetailsViewModel: MainViewModel {
     
     @MainActor
     func checkIsFavorite(setValue:Bool = false) async {
-        let movieFromDb = await SwiftDataManager.shared.movie(withID: movie.id)
+        let movieFromDb = await SwiftDataManager.shared.getMovieById(id: movie.id)
         if movieFromDb == nil {
             await SwiftDataManager.shared.saveMovies([self.movie])
         }

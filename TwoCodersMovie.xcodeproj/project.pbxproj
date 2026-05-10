@@ -82,6 +82,7 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				CacheManager/CacheManager.swift,
+				Constant/Constants.swift,
 				"Extensions/String+Extensions.swift",
 				SDWebImage/SDImagePreloader.swift,
 				Views/Discover/ViewModel/MoviesViewModel.swift,

@@ -347,7 +347,6 @@ final class Test: XCTestCase {
             
             
             let credit1 = try decoder.decode(CreditsObject.self, from:  JSON(creditJson).rawData())
-            
             XCTAssertNotNil(credit1)
             
             do {
@@ -390,26 +389,44 @@ final class Test: XCTestCase {
                 let getObjectById = await SwiftDataManager.shared.getMovieById(id: first.id )
                 XCTAssertNotNil(getObjectById)
                 
-                let getObjectByCustomId = await SwiftDataManager.shared.getMovieById(custumId: first.customId!)
-                XCTAssertNotNil(getObjectByCustomId)
+                let movieByCustomId = await SwiftDataManager.shared.getMovieById(custumId: first.customId!)
+                XCTAssertNotNil(movieByCustomId)
+                                
+               
+                let detailsObjects = await SwiftDataManager.shared.getAllDetails()
+                XCTAssertTrue(detailsObjects.count > 0)
                 
-                // Case
-                let getDetailsObjectById = await SwiftDataManager.shared.getAllCredits()
-                XCTAssertNotNil(getDetailsObjectById)
+                if let first = detailsObjects.first {
+                    let detailsObject = await SwiftDataManager.shared.getDetailsById(id: first.id)
+                    XCTAssertNotNil(detailsObject)
+                    await SwiftDataManager.shared.saveDetailsObject(detaisObject: first)
+                    XCTAssertEqual(true, true)
+                }
+                              
+                let allCredits = await SwiftDataManager.shared.getAllCredits()
+                
+                if let first = allCredits.first {
+                    let credit = await SwiftDataManager.shared.getCreditDetailsById(id: first.id)
+                    XCTAssertNotNil(credit)
+                    if let credit = credit {
+                       await SwiftDataManager.shared.saveCreditsObject(detaisObject: credit)
+                        XCTAssertEqual(true, true)
+                    }
+                }
                 
                 //case set favorite
-                getObjectByCustomId?.myFavorite = true
-                await SwiftDataManager.shared.saveFavorite(movie: getObjectByCustomId!)
+                movieByCustomId?.myFavorite = true
+                await SwiftDataManager.shared.saveFavorite(movie: movieByCustomId!)
                 let getObejctByCustomId1 = await SwiftDataManager.shared.getMovieById(custumId: first.customId!)
                 XCTAssertEqual(getObejctByCustomId1?.myFavorite, true)
                 
                 // case not found
-                let notFoind = await SwiftDataManager.shared.getMovieById(id: -1111)
-                XCTAssertNil(notFoind)
+                let notFound = await SwiftDataManager.shared.getMovieById(id: -1111)
+                XCTAssertNil(notFound)
                 
                 do {
                     let encoder = JSONEncoder()
-                    let data = try encoder.encode(getObjectByCustomId!)
+                    let data = try encoder.encode(movieByCustomId!)
                     let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
 
                     // 3. Assert
@@ -465,9 +482,20 @@ final class Test: XCTestCase {
             
             let nilObject = CacheManager.shared.get(Movie.self, forKey: "TestingObjects")
             XCTAssertNil(nilObject)
+            
+            
         } catch {
-            XCTFail("not working search \(error)")
+            XCTFail("not working cache \(error)")
         }
+    }
+    
+    func testMainModel() async {
+        class MyClass {}
+        let id = ObjectIdentifier(MyClass.self)
+        let model = MainViewModel(id)
+        model.setPhaseToLoading()
+        model.setError(NSError(domain: "", code: 100))
+        XCTAssertNotNil(model.phaseFetch)
     }
 
 }

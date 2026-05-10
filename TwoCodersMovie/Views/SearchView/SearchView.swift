@@ -9,9 +9,6 @@ import SwiftUI
 import Combine
 import SwiftyJSON
 
-enum SearchScope: String, CaseIterable {
-    case movies, series
-}
 
 class SearchViewModel: MainViewModel {
     var pageSearch = 1

@@ -45,9 +45,9 @@ struct MoviesView: View {
                     }
                 }
             }
-            .modifier(NavigationModifier())
-            .navigationTitle("Trending")
+            .navigationTitle("Trending Movies")
             .toolbar((router.currentView != "") ? .hidden : .visible, for: .tabBar)
+            .modifier(NavigationModifier())
         }
         .if(embederdSearchInMainView) { view in
             view.searchable(text: $viewModel.searchText, placement: .navigationBarDrawer(displayMode: .automatic))
