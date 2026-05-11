@@ -85,8 +85,8 @@
 				Constant/Constants.swift,
 				"Extensions/String+Extensions.swift",
 				SDWebImage/SDImagePreloader.swift,
-				Views/Discover/ViewModel/MoviesViewModel.swift,
 				Views/MainViewModel/MainViewModel.swift,
+				Views/Trending/ViewModel/MoviesViewModel.swift,
 				Views/ViewEnum/ViewEnums.swift,
 			);
 			target = 24B684F92FAC2693002FF66C /* TwoCodersMovieTests */;

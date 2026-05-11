@@ -24,8 +24,7 @@ struct FavoriteView:View {
                     )
                 } else {
                     ScrollView {
-                        LazyVGrid(columns: [GridItem(.adaptive(minimum: UIDevice.isTV ? 475 : 175, maximum: UIDevice.isTV ? 475 :  175), spacing:UIDevice.isTV ? 60 : 10, alignment: .leading)],
-                                  alignment: .center, spacing: 10) {
+                        MovieGrid {
                             ForEach(favouriteMoviee, id: \.customId) { movie in
                                 Button {
                                     let model = MovieDetailsViewModel(movie: movie, fromSeries: false, routerType: .favorite)

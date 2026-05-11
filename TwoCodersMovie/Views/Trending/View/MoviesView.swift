@@ -15,9 +15,7 @@ struct MoviesView: View {
     var body: some View {
         NavigationStack(path: $router.path) {
             ScrollView {
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: UIDevice.isTV ? 475 : 175, maximum: UIDevice.isTV ? 475 :  175), spacing:UIDevice.isTV ? 60 : 10, alignment: .leading)],
-                          alignment: .center, spacing: 10) {
-                    
+                MovieGrid {
                     let model = (viewModel.searching && embederdSearchInMainView) ? viewModel.searchObjects : viewModel.movies
 
                     ForEach(model, id: \.customId) { movie in
