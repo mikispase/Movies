@@ -23,3 +23,14 @@ final class SDImagePreloader {
         })
     }
 }
+
+protocol ImagePreloadable {
+    func preloadImages(for movies: [Movie])
+}
+
+extension ImagePreloadable {
+    func preloadImages(for movies: [Movie]) {
+        let urls = movies.compactMap { $0.posterImage } + movies.compactMap { $0.poster780Image }
+        SDImagePreloader.shared.preload(urls: urls)
+    }
+}

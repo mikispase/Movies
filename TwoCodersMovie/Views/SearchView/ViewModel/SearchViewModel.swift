@@ -9,7 +9,7 @@ import SwiftUI
 import Combine
 import SwiftyJSON
 
-class SearchViewModel: MainViewModel {
+class SearchViewModel: MainViewModel, ImagePreloadable {
     var pageSearch = 1
     var totalPagesSearch = 0
     
@@ -128,8 +128,7 @@ class SearchViewModel: MainViewModel {
                 
                 self.phaseFetch = .success(self.searchObjects)
                 
-                SDImagePreloader.shared.preload(urls: moviesList.compactMap({ $0.posterImage }))
-                SDImagePreloader.shared.preload(urls: moviesList.compactMap({ $0.poster780Image }))
+                preloadImages(for: moviesList)
                 
                 if pageSearch >= totalPagesSearch {
                     shoudLoadMoreSearch = false

@@ -13,7 +13,7 @@ enum SearchScope: String, CaseIterable {
     case movies, series
 }
 
-class MoviesViewModel: MainViewModel {
+class MoviesViewModel: MainViewModel, ImagePreloadable {
     var page = 1
     var totalPages = 0
     
@@ -85,8 +85,7 @@ class MoviesViewModel: MainViewModel {
             self.movies.append(contentsOf: moviesList)
             self.phaseFetch = .success(self.movies)
 
-            SDImagePreloader.shared.preload(urls: moviesList.compactMap({ $0.posterImage }))
-            SDImagePreloader.shared.preload(urls: moviesList.compactMap({ $0.poster780Image }))
+            preloadImages(for: moviesList)
 
             if initialLoad {
                 initialLoad = false
@@ -237,8 +236,7 @@ class MoviesViewModel: MainViewModel {
                 
                 self.phaseFetch = .success(self.searchObjects)
 
-                SDImagePreloader.shared.preload(urls: moviesList.compactMap({ $0.posterImage }))
-                SDImagePreloader.shared.preload(urls: moviesList.compactMap({ $0.poster780Image }))
+                preloadImages(for: moviesList)
 
                 if pageSearch >= totalPagesSearch {
                     shoudLoadMoreSearch = false
