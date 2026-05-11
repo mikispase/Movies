@@ -44,7 +44,7 @@ struct MovieDetailsView: View {
                             }
                             
                             if let voteCount = viewModel.moviewDetails?.voteCount, let voteAverage = viewModel.moviewDetails?.voteAverage {
-                                MoviewDetailRatingView(voteAvetage: voteAverage, voteCount: voteCount)
+                                MovieDetailRatingView(voteAvetage: voteAverage, voteCount: voteCount)
                             }
                             
                             if let countries = viewModel.moviewDetails?.productionCountries {
@@ -53,11 +53,11 @@ struct MovieDetailsView: View {
                             }
                             
                             if let credit = viewModel.credit {
-                                MoviewDetailCastView(credit: credit)
+                                MovieDetailCastView(credit: credit)
                             }
                             
                             if let url = URL(string: viewModel.moviewDetails?.homepage ?? ""), let details = viewModel.moviewDetails {
-                                MoviesDetailsExternalPageView(url: url, model: details, routerType: viewModel.routerType)
+                                MovieDetailsExternalPageView(url: url, model: details, routerType: viewModel.routerType)
                             }
                         }
                         .padding(.leading)

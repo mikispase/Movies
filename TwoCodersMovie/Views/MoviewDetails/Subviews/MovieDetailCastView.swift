@@ -1,5 +1,5 @@
 //
-//  MoviewDetailCastView.swift
+//  MovieDetailCastView.swift
 //  TwoCodersMovie
 //
 //  Created by Dimitar Spasovski on 09/05/2026.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct MoviewDetailCastView: View {
+struct MovieDetailCastView: View {
     let credit:CreditsObject
     @Namespace private var namespace
     @State var mediaFullScreenCast:FullScreenMedia?

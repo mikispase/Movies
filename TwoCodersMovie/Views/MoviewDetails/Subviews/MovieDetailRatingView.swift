@@ -1,5 +1,5 @@
 //
-//  MoviewDetailRatingView.swift
+//  MovieDetailRatingView.swift
 //  TwoCodersMovie
 //
 //  Created by Dimitar Spasovski on 09/05/2026.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct MoviewDetailRatingView : View {
+struct MovieDetailRatingView : View {
     let voteAvetage:Double?
     let voteCount:Int?
     var body: some View {

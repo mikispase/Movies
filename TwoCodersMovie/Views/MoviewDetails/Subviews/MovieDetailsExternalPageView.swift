@@ -1,5 +1,5 @@
 //
-//  MoviesDetailsExternalPageView.swift
+//  MovieDetailsExternalPageView.swift
 //  TwoCodersMovie
 //
 //  Created by Dimitar Spasovski on 07/05/2026.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct MoviesDetailsExternalPageView: View {
+struct MovieDetailsExternalPageView: View {
     let url:URL
     let model:DetailsObject
     let routerType:RouterType

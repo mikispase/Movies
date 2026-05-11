@@ -10,19 +10,14 @@ import Combine
 class MovieDetailsViewModel: MainViewModel {
     let movie: Movie
     let fromSeries: Bool
+    let routerType:RouterType
 
     @Published var moviewDetails: DetailsObject?
-    
     @Published var mediaFullScreen: FullScreenMedia?
-    
     @Published var mediaFullScreenCast: FullScreenMedia?
-
     @Published var credit: CreditsObject?
-
     @Published var isFavorite: Bool = false
-    
-    let routerType:RouterType
-    
+        
     init(movie: Movie, fromSeries: Bool, fromMockUp:Bool = false, routerType:RouterType) {
         self.movie = movie
         self.fromSeries = fromSeries
