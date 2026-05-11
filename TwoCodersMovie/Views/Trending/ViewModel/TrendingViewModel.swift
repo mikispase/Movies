@@ -1,5 +1,5 @@
 //
-//  MoviesViewModel.swift
+//  TrendingViewModel.swift
 //  TwoCodersMovie
 //
 //  Created by Dimitar Spasovski on 06/05/2026.
@@ -13,7 +13,7 @@ enum SearchScope: String, CaseIterable {
     case movies, series
 }
 
-class MoviesViewModel: MainViewModel, ImagePreloadable {
+class TrendingViewModel: MainViewModel, ImagePreloadable {
     var page = 1
     var totalPages = 0
     

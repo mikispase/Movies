@@ -1,5 +1,5 @@
 //
-//  MoviesView.swift
+//  TrendingView.swift
 //  TwoCodersMovie
 //
 //  Created by Dimitar Spasovski on 06/05/2026.
@@ -9,8 +9,8 @@ import SwiftUI
 import Combine
 import SwiftyJSON
 
-struct MoviesView: View {
-    @StateObject var viewModel = MoviesViewModel()
+struct TrendingView: View {
+    @StateObject var viewModel = TrendingViewModel()
     @EnvironmentObject var router: Router
     var body: some View {
         NavigationStack(path: $router.path) {
@@ -76,5 +76,5 @@ struct MoviesView: View {
 }
 
 #Preview {
-    MoviesView()
+    TrendingView()
 }

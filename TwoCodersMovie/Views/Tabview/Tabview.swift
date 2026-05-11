@@ -33,7 +33,7 @@ struct NewTabbar: View {
         
         TabView(selection: $selectedTab) {
             Tab("Trending", systemImage: "safari.fill", value: TabbarSelection.discover) {
-                MoviesView()
+                TrendingView()
             }
             
             Tab("Favorite", systemImage: "heart", value: TabbarSelection.favorite) {
@@ -61,7 +61,7 @@ struct OldTabbar: View {
     
     var body: some View {
         TabView(selection: $selectedTab) {
-            MoviesView()
+            TrendingView()
                 .tabItem {
                     Image(systemName: "safari.fill")
                         .frame(width: 30, height: 30)

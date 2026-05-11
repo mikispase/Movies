@@ -15,7 +15,7 @@ struct TwoCodersMovieTests {
     @Test
     func testDiscover() async throws {
         
-        let model = MoviesViewModel(fromMockUp: true)
+        let model = TrendingViewModel(fromMockUp: true)
         await model.getMoviews(page: model.page)
         model.page += 1
         await model.getMoviews(page: model.page)
@@ -63,7 +63,7 @@ struct TwoCodersMovieTests {
     
     @Test
     func testPaginationLogic() async throws  {
-        let model = MoviesViewModel(fromMockUp: true)
+        let model = TrendingViewModel(fromMockUp: true)
         model.page = 1
         await model.getMoviews(page: model.page)
         model.page = 1
@@ -115,7 +115,7 @@ struct TwoCodersMovieTests {
     
     @Test
     func testMultiplePagination() async {
-        let model = MoviesViewModel(fromMockUp: true)
+        let model = TrendingViewModel(fromMockUp: true)
         await model.getMoviews(page: 1)
         await model.getMoviews(page: 2)
         await model.getMoviews(page: 3)
@@ -124,7 +124,7 @@ struct TwoCodersMovieTests {
     
     @Test
     func testEmptyState() {
-        let model = MoviesViewModel(fromMockUp: true)
+        let model = TrendingViewModel(fromMockUp: true)
         model.movies = []
         #expect(model.movies.isEmpty)
     }
