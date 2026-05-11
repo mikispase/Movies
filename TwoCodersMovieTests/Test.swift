@@ -34,7 +34,7 @@ final class Test: XCTestCase {
     }
     
     func testNewTest() async{
-        let model = MoviesViewModel(fromMockUp: true)
+        let model = TrendingViewModel(fromMockUp: true)
         await model.getMoviews(page: 1)
         model.loadMore()
         
@@ -42,7 +42,7 @@ final class Test: XCTestCase {
     }
     
     func testPaginationLogic() async throws  {
-        let model = MoviesViewModel(fromMockUp: true)
+        let model = TrendingViewModel(fromMockUp: true)
         model.page = 1
         await model.getMoviews(page: model.page)
         model.page = 1
@@ -91,7 +91,7 @@ final class Test: XCTestCase {
     }
     
     func testMultiplePagination() async {
-        let model = MoviesViewModel(fromMockUp: true)
+        let model = TrendingViewModel(fromMockUp: true)
         await model.getMoviews(page: 1)
         await model.getMoviews(page: 2)
         await model.getMoviews(page: 3)
@@ -100,7 +100,7 @@ final class Test: XCTestCase {
     
     
     func testEmptyState() {
-        let model = MoviesViewModel(fromMockUp: true)
+        let model = TrendingViewModel(fromMockUp: true)
         model.movies = []
         XCTAssertTrue(model.movies.isEmpty)
     }
@@ -185,7 +185,7 @@ final class Test: XCTestCase {
     }
     
     func testShouldLoadMoreWhenPagesNil() {
-        let model = MoviesViewModel(fromMockUp: true)
+        let model = TrendingViewModel(fromMockUp: true)
         
         model.page = 0
         model.totalPages = 0
@@ -196,7 +196,7 @@ final class Test: XCTestCase {
     }
     
     func testLoadMoreIncrementsPage() {
-        let model = MoviesViewModel(fromMockUp: true)
+        let model = TrendingViewModel(fromMockUp: true)
         
         model.page = 1
         model.totalPages = 5
@@ -233,7 +233,7 @@ final class Test: XCTestCase {
     }
     
     func testLoadMoreDoesNothingWhenDisabled() {
-        let model = MoviesViewModel(fromMockUp: true)
+        let model = TrendingViewModel(fromMockUp: true)
         model.page = 0
         model.totalPages = 0
         model.shoudLoadMore = false
@@ -256,7 +256,7 @@ final class Test: XCTestCase {
     }
     
     func testViewModelInitialState() {
-        let model = MoviesViewModel(fromMockUp: true)
+        let model = TrendingViewModel(fromMockUp: true)
         XCTAssertTrue(model.movies.isEmpty)
         XCTAssertEqual(model.page, 1)
     }
@@ -423,7 +423,7 @@ final class Test: XCTestCase {
     
     func testSearch() async {
         do {
-            let model = MoviesViewModel(fromMockUp: false)
+            let model = TrendingViewModel(fromMockUp: false)
             model.searchText = "Ted"
             model.search(query: model.searchText, needRefreshData: false)
             try await Task.sleep(for: .seconds(2))
