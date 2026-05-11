@@ -35,5 +35,8 @@ struct MovieDetailsHeaderView: View {
                     }
                 }
         }
+#if os(tvOS)
+        .focusable()
+#endif
     }
 }

@@ -42,5 +42,8 @@ struct MoviesDetailsExternalPageView: View {
             }
         }
         .padding(.vertical)
+#if os(tvOS)
+        .focusable()
+#endif
     }
 }

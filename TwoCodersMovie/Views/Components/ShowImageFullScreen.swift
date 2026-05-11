@@ -25,7 +25,7 @@ struct ShowImageFullScreen: View {
                             dismiss()
                         } label: {
                             Image(systemName: "xmark")
-                                .foregroundStyle(.white)
+                                .foregroundStyle(.custom)
                         }
                     }
 #endif

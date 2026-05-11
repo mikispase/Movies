@@ -29,5 +29,8 @@ struct MovieDetailsProductionContriesView: View {
             }
         }
         .padding(.top, 16)
+#if os(tvOS)
+        .focusable()
+#endif
     }
 }

@@ -29,9 +29,6 @@ struct MovieDetailsView: View {
                             viewModel.mediaFullScreen = mediaFullScreen
                         }
                         .ignoresSafeArea(.all)
-#if os(tvOS)
-.focusSection()
-#endif
                         
                         VStack(alignment: .leading, spacing: 0) {
                             if let overview =  viewModel.movie.overview, !overview.isEmpty {
@@ -52,6 +49,7 @@ struct MovieDetailsView: View {
                             
                             if let countries = viewModel.moviewDetails?.productionCountries {
                                 MovieDetailsProductionContriesView(countries: countries)
+
                             }
                             
                             if let credit = viewModel.credit {
@@ -64,14 +62,7 @@ struct MovieDetailsView: View {
                         }
                         .padding(.leading)
                         .redacted(reason: viewModel.isLoading  ? .placeholder  : [])
-#if os(tvOS)
-.focusSection()
-#endif
-                        
                     }
-#if os(tvOS)
-.focusSection()
-#endif
                 }
             }
         }
@@ -137,5 +128,8 @@ struct MoviewDetailsGenreView: View {
             }
         }
         .padding(.top)
+#if os(tvOS)
+        .focusable()
+#endif
     }
 }

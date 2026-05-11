@@ -30,6 +30,15 @@ struct SearchView:View {
                         description: Text("Noting found with your criteria")
                     )
                 } else {
+                    
+                    if UIDevice.isTV {
+                        Picker("Filter", selection: $viewModel.searchScope) {
+                            Text("Movies").tag(SearchScope.movies)
+                            Text("Series").tag(SearchScope.series)
+                        }
+                        .pickerStyle(.segmented)
+                    }
+                    
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: UIDevice.isTV ? 475 : 175, maximum: UIDevice.isTV ? 475 :  175), spacing:UIDevice.isTV ? 60 : 10, alignment: .leading)],
                               alignment: .center, spacing: 10) {
                         ForEach(viewModel.searchObjects, id: \.customId) { movie in
@@ -67,13 +76,7 @@ struct SearchView:View {
         .searchable(text: $viewModel.searchText, placement: .navigationBarDrawer(displayMode: .automatic))
 #endif
         
-#if os(tvOS)
-        .searchScopes($viewModel.searchScope) {
-            ForEach(SearchScope.allCases, id: \.self) { scope in
-                Text(scope.rawValue.capitalized)
-            }
-        }
-#else
+#if !os(tvOS)
         .searchScopes($viewModel.searchScope, activation: .onSearchPresentation) {
             ForEach(SearchScope.allCases, id: \.self) { scope in
                 Text(scope.rawValue.capitalized)

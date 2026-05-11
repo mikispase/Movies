@@ -19,5 +19,8 @@ struct MovieDetailsOverviewView: View {
                 .padding(.trailing, 8)
         }
         .padding(.top, 16)
+#if os(tvOS)
+        .focusable()
+#endif
     }
 }

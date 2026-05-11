@@ -11,11 +11,16 @@ struct MovieDetailsReleaseDateView: View {
     let releaseDate: String
 
     var body: some View {
-        Text("Release Date")
-            .font(.headline)
-            .padding(.top, 16)
-        Text(releaseDate)
-            .font(.system(size: 15))
+        VStack(spacing: 0) {
+            Text("Release Date")
+                .font(.headline)
+                .padding(.top, 16)
+            Text(releaseDate)
+                .font(.system(size: 15))
+        }
+#if os(tvOS)
+        .focusable()
+#endif
 
     }
 }

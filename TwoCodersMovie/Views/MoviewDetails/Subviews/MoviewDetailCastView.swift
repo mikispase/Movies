@@ -42,6 +42,11 @@ struct MoviewDetailCastView: View {
                                         .frame(width: 80)
                                 }
                             }
+#if os(tvOS)
+                            .buttonStyle(.card)
+                            .focusable()
+#endif
+
                         }
                     }
                 }
