@@ -36,7 +36,7 @@ struct MovieDetailsView: View {
                             }
                             
                             if let genre = viewModel.moviewDetails?.genres {
-                                MoviewDetailsGenreView(gentres: genre)
+                                MovieDetailsGenreView(gentres: genre)
                             }
                             
                             if let releaseDate =  viewModel.movie.releaseDate {
@@ -109,27 +109,5 @@ struct MovieDetailsView: View {
                 .modifier(AnimationTransition(id: "fullScreenMediaCast", namespace: namespace))
 #endif
         })
-    }
-}
-
-struct MoviewDetailsGenreView: View {
-    let gentres:[Genre]
-    var body: some View {
-        
-        VStack(alignment: .leading) {
-            Text("Genre")
-                .font(.headline)
-            
-            FlowHStack {
-                ForEach(gentres, id:\.id) { genre in
-                    Text(genre.name ?? "")
-                        .font(.system(size: 15))
-                }
-            }
-        }
-        .padding(.top)
-#if os(tvOS)
-        .focusable()
-#endif
     }
 }
